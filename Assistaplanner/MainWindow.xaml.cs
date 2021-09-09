@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Assistaplanner
 {
     /// <summary>
@@ -23,6 +25,15 @@ namespace Assistaplanner
         public MainWindow()
         {
             InitializeComponent();
+
+        }
+
+        
+
+        private void neuerTerminButton_Click(object sender, RoutedEventArgs e)
+        {
+            NeuerTermin neuerTermin = new NeuerTermin();
+            neuerTermin.Show();
         }
     }
 }
