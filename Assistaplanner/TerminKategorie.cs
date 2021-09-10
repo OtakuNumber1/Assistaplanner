@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Assistaplanner
 {
-    class TerminKategorie
+   public class TerminKategorie
     {
-        int KategorieID { get; set; }
-        string KategorieName { get; set; }
-        int KategorieFarbe { get; set; }
+        public int terminKategorieID { get; set; }
+        public string KategorieName { get; set; }
+        public string KategorieFarbe { get; set; }
     }
 }

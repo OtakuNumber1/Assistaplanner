@@ -22,9 +22,13 @@ namespace Assistaplanner
     {
         public NeuerTermin()
         {
-            List<int> kategorien = new List<int>(new int[] { 1, 2, 3, 4, 5, 6 });
+            List<string> wochentage = new List<string> { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
             InitializeComponent();
+            List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
             KategoriePicker.ItemsSource = kategorien;
+            KategoriePicker.DisplayMemberPath = "KategorieName";
+            KategoriePicker.SelectedValuePath = "terminKategorieID";
+            wochentagBox.ItemsSource = wochentage;
 
 
         }
@@ -37,30 +41,37 @@ namespace Assistaplanner
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             InsertIntoDB();
-            this.Close();
+            Close();
         }
         public void InsertIntoDB()
         {
             SQLiteConnection conn = Database.DatabaseConnection();
 
-            string insertTerminQuery = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`von`,`bis`,`beschreibung`) VALUES (@kategorie, @titel, @untertitel, @von, @bis, @beschreibung)";
+            string insertTerminQuery = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
 
             SQLiteCommand command = new SQLiteCommand(insertTerminQuery, conn);
+
             Database.IsConnectionOpen(conn);
-            command.Parameters.AddWithValue("@kategorie", KategoriePicker.SelectedValue);
-            command.Parameters.AddWithValue("@titel", TitelText.Text);
-            command.Parameters.AddWithValue("@untertitel", UntertitelText.Text);
-            command.Parameters.AddWithValue("@von", 1600);
-            command.Parameters.AddWithValue("@bis", 1800);
+            command.Parameters.AddWithValue("@terminKategorie", KategoriePicker.SelectedValue);
+            command.Parameters.AddWithValue("@terminTitel", TitelText.Text);
+            command.Parameters.AddWithValue("@terminUntertitel", UntertitelText.Text);
+            command.Parameters.AddWithValue("@wochentag", wochentagBox.SelectedItem);
+            command.Parameters.AddWithValue("@vonStunde", vonStunde.Text);
+            command.Parameters.AddWithValue("@vonMinute", vonMinute.Text);
+            command.Parameters.AddWithValue("@bisStunde", bisStunde.Text);
+            command.Parameters.AddWithValue("@bisMinute", bisMinute.Text);
             command.Parameters.AddWithValue("@beschreibung", BeschreibungText.Text);
             var result = command.ExecuteNonQuery();
 
             Console.WriteLine(result);
         }
 
+       
+
         private void TitelText_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
+        
     }
 }

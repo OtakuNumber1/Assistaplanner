@@ -35,5 +35,11 @@ namespace Assistaplanner
             NeuerTermin neuerTermin = new NeuerTermin();
             neuerTermin.Show();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ShowKategorien KategorienListe = new ShowKategorien();
+            KategorienListe.Show();
+        }
     }
 }
