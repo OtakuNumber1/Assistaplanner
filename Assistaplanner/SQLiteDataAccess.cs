@@ -16,7 +16,14 @@ namespace Assistaplanner
             using(IDbConnection cnn = Database.DatabaseConnection())
             {
                 var output = cnn.Query<TerminKategorie>("select * from terminKategorie", new DynamicParameters());
-
+                return output.ToList();
+            }
+        }
+        public static List<Termin> LoadTermine()
+        {
+            using(IDbConnection cnn = Database.DatabaseConnection())
+            {
+                var output = cnn.Query<Termin>("select * from termin", new DynamicParameters());
                 return output.ToList();
             }
         }

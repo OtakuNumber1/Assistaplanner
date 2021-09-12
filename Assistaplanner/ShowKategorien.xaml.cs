@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -25,21 +27,41 @@ namespace Assistaplanner
         public ShowKategorien()
         {
             InitializeComponent();
-            List<TerminKategorie> kat = KategorienLaden();
-            kategorienliste.ItemsSource = kat;
-
+            List<TerminKategorie> kategorien = KategorienLaden();
+            kategorienliste.ItemsSource = kategorien;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //Bearbeitknopf
+            List<TerminKategorie> kat = SQLiteDataAccess.LoadKategorien();
+            kategorienliste.ItemsSource = kat;
+
         }
         public static List<TerminKategorie> KategorienLaden()
         {
+           
             List<TerminKategorie> kat = SQLiteDataAccess.LoadKategorien();
             return kat;
+
         }
 
-    
+        private void kategorieHinzufügenButton_Click(object sender, RoutedEventArgs e)
+        {
+            NeueKategorie neuekat = new NeueKategorie();
+            neuekat.Show();
+        }
+
+        private void KategorieLöschenButton_Click(object sender, RoutedEventArgs e)
+        {
+            //idOFKategorie muss die terminKategorieID werden nicht die ID in der Grid
+            int idOfKategorie = kategorienliste.SelectedIndex + 1;
+
+            using (IDbConnection cnn = Database.DatabaseConnection())
+            {
+                cnn.Query<TerminKategorie>("delete from terminKategorie where terminKategorieID=" + idOfKategorie, new DynamicParameters());
+                KategorienLaden();
+            }
+        }
     }
 }

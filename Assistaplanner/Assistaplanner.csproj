@@ -119,6 +119,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="NeueKategorie.xaml.cs">
+      <DependentUpon>NeueKategorie.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NeuerTermin.xaml.cs">
       <DependentUpon>NeuerTermin.xaml</DependentUpon>
     </Compile>
@@ -128,6 +131,9 @@
     <Compile Include="SQLiteDataAccess.cs" />
     <Compile Include="TerminKategorie.cs" />
     <Compile Include="termin.cs" />
+    <Compile Include="TerminListe.xaml.cs">
+      <DependentUpon>TerminListe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TerminZeit.cs" />
     <Compile Include="TestClass.cs" />
     <Page Include="MainWindow.xaml">
@@ -143,11 +149,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NeueKategorie.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NeuerTermin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShowKategorien.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TerminListe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

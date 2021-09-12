@@ -41,5 +41,11 @@ namespace Assistaplanner
             ShowKategorien KategorienListe = new ShowKategorien();
             KategorienListe.Show();
         }
+
+        private void terminLöschenButton_Click(object sender, RoutedEventArgs e)
+        {
+            TerminListe termine = new TerminListe();
+            termine.Show();
+        }
     }
 }

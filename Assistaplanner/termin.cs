@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Assistaplanner
 {
-    class Termin
+    public class Termin
     {
-        int TerminID { get; set; }
-        TerminKategorie KategorieID { get; set; }
-        string Titel { get; set; }
-        string Untertitel { get; set; }
-        string Wochentag { get; set; }
-        int vonStunde { get; set; }
-        int vonMinute { get; set; }
-        int bisStunde { get; set; }
-        int bisMinute { get; set; }
-        string beschreibung { get; set; }
+        public int TerminID { get; set; }
+        public int KategorieID { get; set; }
+        public string Titel { get; set; }
+        public string Untertitel { get; set; }
+        public string Wochentag { get; set; }
+        public int vonStunde { get; set; }
+        public int vonMinute { get; set; }
+         public int bisStunde { get; set; }
+        public int bisMinute { get; set; }
+        public string beschreibung { get; set; }
     }
 }

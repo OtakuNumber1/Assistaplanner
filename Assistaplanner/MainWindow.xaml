@@ -5,14 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assistaplanner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="1080" Width="1920">
     <Grid>
-        <Button x:Name="neuerTerminButton" Content="Neuer Termin" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="neuerTerminButton_Click"/>
-        <Button Content="Kategorien" HorizontalAlignment="Left" Margin="106,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Button x:Name="terminLöschenButton" Content="Termin löschen" HorizontalAlignment="Left" Margin="695,15,0,0" VerticalAlignment="Top" Width="87"/>
-        <Button x:Name="terminBearbeitenKnopf" Content="Termin bearbeiten" HorizontalAlignment="Left" Margin="571,15,0,0" VerticalAlignment="Top" Width="107"/>
-        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="281,15,0,0" VerticalAlignment="Top" Width="99"/>
-        <Button Content="Tagesansicht" HorizontalAlignment="Left" Margin="385,15,0,0" VerticalAlignment="Top" Width="98"/>
+        <Button x:Name="neuerTerminButton" Content="Neuer Termin" HorizontalAlignment="Left" Margin="47,30,0,0" VerticalAlignment="Top" Width="270" Click="neuerTerminButton_Click" Height="76" FontSize="36"/>
+        <Button Content="Kategorien" HorizontalAlignment="Left" Margin="353,30,0,0" VerticalAlignment="Top" Width="177" Click="Button_Click" Height="76" FontSize="36"/>
+        <Button x:Name="terminLöschenButton" Content="Terminliste&#xD;&#xA;" HorizontalAlignment="Left" Margin="1662,12,0,0" VerticalAlignment="Top" Width="210" Height="71" Click="terminLöschenButton_Click" FontSize="36"/>
+        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="755,15,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36"/>
+        <Button Content="Tagesansicht" HorizontalAlignment="Left" Margin="1033,12,0,0" VerticalAlignment="Top" Width="227" Height="71" FontSize="36"/>
 
+        <StackPanel Margin="10,15,-10,-15">
+            <Grid Height="800" Margin="56,200,56,200" Width="1800">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="29*"/>
+                    <RowDefinition Height="371*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="125*"/>
+                    <ColumnDefinition Width="250*"/>
+                    <ColumnDefinition Width="250*"/>
+                    <ColumnDefinition Width="250*"/>
+                    <ColumnDefinition Width="250*"/>
+                    <ColumnDefinition Width="250*"/>
+                    <ColumnDefinition Width="250*"/>
+                    <ColumnDefinition Width="250*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Dienstag" Grid.Column="2" HorizontalAlignment="Center" Margin="10,0,0,0" VerticalAlignment="Center" Height="58" Width="220" FontSize="36"/>
+                <Label Content="Montag" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" Height="58" Width="220" FontSize="36"/>
+                <Label Content="Mittwoch" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="230" FontSize="36"/>
+                <Label Content="Donnerstag" Grid.Column="4" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="58" Width="220" FontSize="36"/>
+                <Label Content="Freitag" Grid.Column="5" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="58" Width="220" FontSize="36"/>
+                <Label Content="Samstag" Grid.Column="6" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="58" Width="220" FontSize="36"/>
+                <Label Content="Sonntag" Grid.Column="7" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="58" Width="220" FontSize="36"/>
+
+            </Grid>
+        </StackPanel>
     </Grid>
+
 </Window>
