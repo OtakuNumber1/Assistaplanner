@@ -50,6 +50,7 @@ namespace Assistaplanner
         private void KategorieHinzufügenButton_Click(object sender, RoutedEventArgs e)
         {
             CreateKategorie();
+            Close();
         }
     }
 }

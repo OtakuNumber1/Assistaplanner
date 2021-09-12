@@ -54,13 +54,15 @@ namespace Assistaplanner
 
         private void KategorieLöschenButton_Click(object sender, RoutedEventArgs e)
         {
-            //idOFKategorie muss die terminKategorieID werden nicht die ID in der Grid
-            int idOfKategorie = kategorienliste.SelectedIndex + 1;
+            TerminKategorie selectedKategorie = kategorienliste.SelectedItem as TerminKategorie;
 
-            using (IDbConnection cnn = Database.DatabaseConnection())
-            {
-                cnn.Query<TerminKategorie>("delete from terminKategorie where terminKategorieID=" + idOfKategorie, new DynamicParameters());
-                KategorienLaden();
+            if (selectedKategorie != null) {
+                int idOfKategorie = selectedKategorie.terminKategorieID;
+                using (IDbConnection cnn = Database.DatabaseConnection())
+                {
+                    cnn.Query<TerminKategorie>("delete from terminKategorie where terminKategorieID=" + idOfKategorie, new DynamicParameters());
+                    KategorienLaden();
+                }
             }
         }
     }

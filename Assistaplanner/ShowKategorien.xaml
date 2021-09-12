@@ -8,7 +8,7 @@
         Title="ShowKategorien" Height="450" Width="574.352">
     <Grid Margin="10,10,2,4">
         <Button x:Name="kategorieHinzufügenButton" Content="Kategorie hinzufügen" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="119" RenderTransformOrigin="0.44,0.1" Height="30" Click="kategorieHinzufügenButton_Click"/>
-        <Button x:Name="ListeAktualisieren" Content="Kategorie bearbeiten" HorizontalAlignment="Left" Margin="222,10,0,0" VerticalAlignment="Top" Width="116" RenderTransformOrigin="0.773,0.6" Click="Button_Click" Height="30"/>
+        <Button x:Name="ListeAktualisieren" Content="Kategorien aktualisieren" HorizontalAlignment="Left" Margin="222,10,0,0" VerticalAlignment="Top" Width="135" RenderTransformOrigin="0.773,0.6" Click="Button_Click" Height="30"/>
         <Button x:Name="KategorieLöschenButton" Content="Kategorie löschen" HorizontalAlignment="Left" Margin="424,10,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="KategorieLöschenButton_Click"/>
         <DataGrid x:Name="kategorienliste" HorizontalAlignment="Left" Height="314" Margin="10,81,0,0" VerticalAlignment="Top" Width="534"/>
 

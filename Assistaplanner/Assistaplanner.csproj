@@ -136,6 +136,9 @@
     </Compile>
     <Compile Include="TerminZeit.cs" />
     <Compile Include="TestClass.cs" />
+    <Compile Include="TerminBearbeiten.xaml.cs">
+      <DependentUpon>TerminBearbeiten.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -162,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TerminListe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TerminBearbeiten.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

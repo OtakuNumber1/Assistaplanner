@@ -35,14 +35,15 @@ namespace Assistaplanner
 
         private void terminLöschenButton_Click(object sender, RoutedEventArgs e)
         {
-            //idOFTermin muss die TerminID werden nicht die ID in der Grid
-            int idOfTermin = terminDataGrid.SelectedIndex+1;
-            Console.WriteLine(idOfTermin);
-
-            using (IDbConnection cnn = Database.DatabaseConnection())
+            Termin selectedTermin = terminDataGrid.SelectedItem as Termin;
+            if (selectedTermin != null)
             {
-                cnn.Query<Termin>("delete from termin where terminID="+idOfTermin, new DynamicParameters());
-                TermineLaden();
+                int idOfTermin = selectedTermin.TerminID;
+                using (IDbConnection cnn = Database.DatabaseConnection())
+                {
+                    cnn.Query<Termin>("delete from termin where terminID=" + idOfTermin, new DynamicParameters());
+                    TermineLaden();
+                }
             }
         }
     }

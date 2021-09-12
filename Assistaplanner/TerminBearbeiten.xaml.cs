@@ -16,13 +16,17 @@ using System.Windows.Shapes;
 namespace Assistaplanner
 {
     /// <summary>
-    /// Interaction logic for NeuerTermin.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class NeuerTermin : Window
+    public partial class TerminBearbeiten : Window
     {
-        public NeuerTermin()
+
+        private Termin termin;
+
+        public TerminBearbeiten(Termin termin)
         {
-            List<string> wochentage = new List<string> { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
+            this.termin = termin;
+            List<string> wochentage = new List<string> { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag" };
             InitializeComponent();
             List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
             KategoriePicker.ItemsSource = kategorien;
@@ -30,28 +34,30 @@ namespace Assistaplanner
             KategoriePicker.SelectedValuePath = "terminKategorieID";
             wochentagBox.ItemsSource = wochentage;
 
-
-        }
-
-        private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
+            TitelText.Text = termin.TerminTitel;
+            UntertitelText.Text = termin.TerminUntertitel;
+            wochentagBox.SelectedItem = termin.Wochentag;
+            vonStunde.Text = termin.vonStunde + "";
+            vonMinute.Text = termin.vonMinute + "";
+            bisStunde.Text = termin.bisStunde + "";
+            bisMinute.Text = termin.bisMinute + "";
+            if (kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).Count() > 0)
+            {
+                KategoriePicker.SelectedItem = kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First();
+            }
+            BeschreibungText.Text = termin.beschreibung;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            InsertIntoDB();
-            Close();
-        }
-        public void InsertIntoDB()
-        {
             SQLiteConnection conn = Database.DatabaseConnection();
 
-            string insertTerminQuery = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
+            string insertTerminQuery = "UPDATE termin SET `terminKategorie`=@terminKategorie, `terminTitel`=@terminTitel, `terminUntertitel`=@terminUntertitel,`wochentag`=@wochentag,`vonStunde`=@vonStunde, `vonMinute`=@vonMinute,`bisStunde`=@bisStunde,`bisMinute`=@bisMinute,`beschreibung`=@beschreibung WHERE terminID=@id";
 
             SQLiteCommand command = new SQLiteCommand(insertTerminQuery, conn);
 
             Database.IsConnectionOpen(conn);
+            command.Parameters.AddWithValue("@id", termin.TerminID);
             command.Parameters.AddWithValue("@terminKategorie", KategoriePicker.SelectedValue);
             command.Parameters.AddWithValue("@terminTitel", TitelText.Text);
             command.Parameters.AddWithValue("@terminUntertitel", UntertitelText.Text);
@@ -62,14 +68,7 @@ namespace Assistaplanner
             command.Parameters.AddWithValue("@bisMinute", bisMinute.Text);
             command.Parameters.AddWithValue("@beschreibung", BeschreibungText.Text);
             var result = command.ExecuteNonQuery();
+            Close();
         }
-
-       
-
-        private void TitelText_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-        
     }
 }
