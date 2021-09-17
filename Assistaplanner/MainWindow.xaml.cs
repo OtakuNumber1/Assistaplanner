@@ -99,6 +99,14 @@ namespace Assistaplanner
                     button.Height = Math.Max(0, bisMinuten - startMinute) / (24.0 * 60.0) * totalHeight;
                     button.Margin = new Thickness(point.X, startY + startMinute/(24.0 * 60.0) * totalHeight, 0, 0);
                     button.Content = termin.TerminTitel;
+                    List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
+
+        
+                    if (kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).Count() > 0)
+                    {
+                        Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
+                        button.Background = new SolidColorBrush(color);
+                    }
                     button.Click += (sender, e) =>
                     {
                         TerminBearbeiten terminBearbeiten = new TerminBearbeiten(termin);
@@ -111,6 +119,39 @@ namespace Assistaplanner
                 }
             }
         }
+        private Color ButtonColour(string colourname)
+        {
+            //{ "Blau", "Rot", "Lila", "Hellblau", "Hellgrün", "Gelb", "Grün" };
+            Color color = new Color();
+            switch (colourname)
+            {
+                case "Blau":
+                    color = Color.FromRgb(0, 191, 255);
+                    break;
+                case "Rot":
+                    color = Color.FromRgb(255,0,0);
+                    break;
+                case "Lila":
+                    color = Color.FromRgb(191, 62, 255);
+                    break;
+                case "Hellblau":
+                    color = Color.FromRgb(187,255,255);
+                    break;
+                case "Hellgrün":
+                    color = Color.FromRgb(0,255,127);
+                    break;
+                case "Gelb":
+                    color = Color.FromRgb(255,255,0);
+                    break;
+                case "Grün":
+                    color = Color.FromRgb(154,205,50);
+                    break;
+            }
+
+
+            return color;
+        }
+      
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
