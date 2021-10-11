@@ -1,4 +1,4 @@
-name: "Deploy Assista Planer"
+name: "Deploy Assista"
 
 on:
  push:
