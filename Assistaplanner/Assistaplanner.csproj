@@ -20,6 +20,12 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
+	<PropertyGroup>
+
+		<GenerateResourceMSBuildArchitecture>CurrentArchitecture</GenerateResourceMSBuildArchitecture>
+		<GenerateResourceMSBuildRuntime>CurrentRuntime</GenerateResourceMSBuildRuntime>
+
+	</PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
