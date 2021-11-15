@@ -24,7 +24,7 @@ jobs:
         run: dotnet restore ${( env.PROJECT_PATH )} 
        
       - name: Install SQLite NuGetPackage
-        run: dotnet add C:\Users\yanni\source\repos\Assistaplanner\AssistaPlanner.sln package Dapper --version 2.0.90
+        run: dotnet add ..\source\repos\Assistaplanner\AssistaPlanner.sln package Dapper --version 2.0.90
 
       - name: Install Dapper NuGetPackage
         run: cd C:\Users\yanni\source\repos\Assistaplanner && dotnet add package SQLite --version 3.13.0
