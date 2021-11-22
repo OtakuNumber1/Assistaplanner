@@ -27,8 +27,11 @@ namespace Assistaplanner
         public ShowKategorien()
         {
             InitializeComponent();
+          
             List<TerminKategorie> kategorien = KategorienLaden();
-            kategorienliste.ItemsSource = kategorien;
+         
+
+           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -64,6 +67,11 @@ namespace Assistaplanner
                     KategorienLaden();
                 }
             }
+        }
+
+        private void kategorienliste_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
