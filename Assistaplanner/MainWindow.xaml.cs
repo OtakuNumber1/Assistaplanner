@@ -46,7 +46,7 @@ namespace Assistaplanner
         private void TagesansichtButton_Click(object sender, RoutedEventArgs e)
         {
 
-            Tagesansicht tagesansicht = new Tagesansicht();
+            Tagesansicht tagesansicht = new Tagesansicht("Montag");
             tagesansicht.ShowDialog();
             RenderTermine();
         }

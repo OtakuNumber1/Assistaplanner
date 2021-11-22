@@ -19,10 +19,38 @@ namespace Assistaplanner
     /// </summary>
     public partial class Tagesansicht : Window
     {
-        public Tagesansicht()
+        public Tagesansicht(string Wochentag)
         {
             InitializeComponent();
+            wochentagText.Text = Wochentag;
 
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void terminListeTagesansicht_Click(object sender, RoutedEventArgs e)
+        {
+            TerminListe termine = new TerminListe();
+            termine.ShowDialog();
+            //RenderTermine();
+        }
+
+        private void kategorienlisteTagesansicht_Click(object sender, RoutedEventArgs e)
+        {
+
+            ShowKategorien KategorienListe = new ShowKategorien();
+            KategorienListe.ShowDialog();
+            //RenderTermine();
+        }
+
+        private void neuerTerminTagesansicht_Click(object sender, RoutedEventArgs e)
+        {
+            NeuerTermin neuerTermin = new NeuerTermin();
+            neuerTermin.ShowDialog();
+            //RenderTermine();
         }
 
     }
