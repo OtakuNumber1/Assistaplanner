@@ -16,10 +16,9 @@
             <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
         <Button x:Name="neuerTerminButton" Content="Neuer Termin" HorizontalAlignment="Left" Margin="47,30,0,0" VerticalAlignment="Top" Width="270" Click="neuerTerminButton_Click" Height="76" FontSize="36"/>
-        <Button Content="Kategorien" HorizontalAlignment="Left" Margin="353,30,0,0" VerticalAlignment="Top" Width="177" Click="Button_Click" Height="76" FontSize="36"/>
-        <Button x:Name="terminLöschenButton" Content="Terminliste&#xD;&#xA;" HorizontalAlignment="Left" Margin="1010,12,0,0" VerticalAlignment="Top" Width="210" Height="71" Click="terminLöschenButton_Click" FontSize="36" Grid.Column="1"/>
-        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="103,15,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1"/>
-        <Button Content="Tagesansicht" HorizontalAlignment="Left" Margin="381,12,0,0" VerticalAlignment="Top" Width="227" Click="TagesansichtButton_Click" Height="71" FontSize="36" Grid.Column="1"/>
+        <Button Content="Kategorien" HorizontalAlignment="Left" Margin="353,30,0,0" VerticalAlignment="Top" Width="270" Click="Button_Click" Height="76" FontSize="36"/>
+        <Button x:Name="terminLöschenButton" Content="Terminliste&#xD;&#xA;" HorizontalAlignment="Left" Margin="900,30,0,0" VerticalAlignment="Top" Width="270" Height="76" Click="terminLöschenButton_Click" FontSize="36" Grid.Column="1"/>
+        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="103,30,0,0" VerticalAlignment="Top" Width="270" Height="76" FontSize="36" Grid.Column="1"/>
 
         <Canvas x:Name="kalender" Height="800" Width="1800" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0">
             <Grid x:Name="kalenderGrid" Height="800" Width="1800" ShowGridLines="True" Canvas.Left="10">
@@ -60,13 +59,13 @@
                     <ColumnDefinition Width="250*"/>
                     <ColumnDefinition Width="250*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Dienstag" x:Name="dienstag" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="58" Width="220" FontSize="36"/>
-                <Label Content="Montag" x:Name="montag" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Height="58" Width="220" FontSize="36"/>
-                <Label Content="Mittwoch" x:Name="mittwoch" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="230" FontSize="36"/>
-                <Label Content="Donnerstag" x:Name="donnerstag" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36"/>
-                <Label Content="Freitag" x:Name="freitag" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36"/>
-                <Label Content="Samstag" x:Name="samstag" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36"/>
-                <Label Content="Sonntag" x:Name="sonntag" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36"/>
+                <Label Content="Dienstag" x:Name="dienstag" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="58" Width="220" FontSize="36" MouseDoubleClick="dienstag_Clicked"/>
+                <Label Content="Montag" x:Name="montag" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Height="58" Width="220" FontSize="36" MouseDoubleClick="Montag_Clicked"/>
+                <Label Content="Mittwoch" x:Name="mittwoch" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="230" FontSize="36" MouseDoubleClick="Mittwoch_Clicked"/>
+                <Label Content="Donnerstag" x:Name="donnerstag" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36" MouseDoubleClick="Donnerstag_Clicked"/>
+                <Label Content="Freitag" x:Name="freitag" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36" MouseDoubleClick="Freitag_Clicked"/>
+                <Label Content="Samstag" x:Name="samstag" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36" MouseDoubleClick="Samstag_Clicked"/>
+                <Label Content="Sonntag" x:Name="sonntag" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36" MouseDoubleClick="Sonntag_Clicked"/>
                 <Label Content="00:00" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="120" FontSize="18" Height="31"/>
                 <Label Content="01:00" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Height="31" Width="120" FontSize="18"/>
                 <Label Content="02:00" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="110" Height="31" FontSize="18"/>

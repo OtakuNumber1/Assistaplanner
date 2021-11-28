@@ -16,11 +16,10 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="307,22,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1"/>
-        <Button Content="Tagesansicht" HorizontalAlignment="Left" Margin="30,22,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1"/>
+        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="146.2,22,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="Wochenansicht_Button_Click"/>
         <Button x:Name="neuerTerminTagesansicht" Content="Neuer Termin" HorizontalAlignment="Left" Margin="49,22,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="neuerTerminTagesansicht_Click"/>
-        <Button x:Name="kategorienlisteTagesansicht" Content="Kategorien" HorizontalAlignment="Left" Margin="336,20,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="kategorienlisteTagesansicht_Click"/>
-        <Button x:Name="terminListeTagesansicht" Content="Terminliste" HorizontalAlignment="Left" Margin="958,22,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="terminListeTagesansicht_Click"/>
+        <Button x:Name="kategorienlisteTagesansicht" Content="Kategorien" HorizontalAlignment="Left" Margin="336,22,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="kategorienlisteTagesansicht_Click"/>
+        <Button x:Name="terminListeTagesansicht" Content="Terminliste" HorizontalAlignment="Left" Margin="900,22,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="terminListeTagesansicht_Click"/>
 
 
 
