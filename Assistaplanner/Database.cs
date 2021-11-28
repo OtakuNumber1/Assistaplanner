@@ -15,7 +15,7 @@ namespace Assistaplanner
         {
             SQLiteConnection myConnection;
 
-            myConnection = new SQLiteConnection(@"Data Source= C:\Users\yanni\source\repos\AssistaplannerNedHie\Assistaplanner\assistadb.db");
+            myConnection = new SQLiteConnection(@"Data Source= ../../db/assistadb.db");
 
             return myConnection;
         }
