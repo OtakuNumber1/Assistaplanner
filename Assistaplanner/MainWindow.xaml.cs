@@ -51,13 +51,9 @@ namespace Assistaplanner
             tagesansicht.ShowDialog();
             RenderTermine();
         }
-        private void Dienstag_Click(object sender, RoutedEventArgs e)
-        {
+     
 
-            
-        }
-
-        private void terminLöschenButton_Click(object sender, RoutedEventArgs e)
+        private void TermineButton_Click(object sender, RoutedEventArgs e)
         {
             TerminListe termine = new TerminListe();
             termine.ShowDialog();
@@ -224,6 +220,11 @@ namespace Assistaplanner
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

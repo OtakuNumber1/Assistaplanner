@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assistaplanner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920" Loaded="Window_Loaded">
+        Title="MainWindow" Height="1080" Width="1920" Loaded="Window_Loaded" WindowState="Maximized" WindowStyle="None">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="163*"/>
@@ -17,8 +17,8 @@
         </Grid.RowDefinitions>
         <Button x:Name="neuerTerminButton" Content="Neuer Termin" HorizontalAlignment="Left" Margin="47,30,0,0" VerticalAlignment="Top" Width="270" Click="neuerTerminButton_Click" Height="76" FontSize="36"/>
         <Button Content="Kategorien" HorizontalAlignment="Left" Margin="353,30,0,0" VerticalAlignment="Top" Width="270" Click="Button_Click" Height="76" FontSize="36"/>
-        <Button x:Name="terminLöschenButton" Content="Terminliste&#xD;&#xA;" HorizontalAlignment="Left" Margin="900,30,0,0" VerticalAlignment="Top" Width="270" Height="76" Click="terminLöschenButton_Click" FontSize="36" Grid.Column="1"/>
-        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="103,30,0,0" VerticalAlignment="Top" Width="270" Height="76" FontSize="36" Grid.Column="1"/>
+        <Button x:Name="TermineButton" Content="Terminliste" HorizontalAlignment="Left" Margin="145.2,30,0,0" VerticalAlignment="Top" Width="270" Height="76" Click="TermineButton_Click" FontSize="36" Grid.Column="1"/>
+        <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Right" Margin="0,30,30,0" VerticalAlignment="Top" Width="270" Click="ExitButton_Click" Height="76" FontSize="36" Grid.Column="1"/>
 
         <Canvas x:Name="kalender" Height="800" Width="1800" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0">
             <Grid x:Name="kalenderGrid" Height="800" Width="1800" ShowGridLines="True" Canvas.Left="10">

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assistaplanner"
         mc:Ignorable="d"
-        Title="Tagesansicht" Height="1080" Width="1920">
+        Title="Tagesansicht" Height="1080" Width="1920" WindowState="Maximized" WindowStyle="None">
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -16,11 +16,11 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="146.2,22,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="Wochenansicht_Button_Click"/>
-        <Button x:Name="neuerTerminTagesansicht" Content="Neuer Termin" HorizontalAlignment="Left" Margin="49,22,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="neuerTerminTagesansicht_Click"/>
-        <Button x:Name="kategorienlisteTagesansicht" Content="Kategorien" HorizontalAlignment="Left" Margin="336,22,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="kategorienlisteTagesansicht_Click"/>
-        <Button x:Name="terminListeTagesansicht" Content="Terminliste" HorizontalAlignment="Left" Margin="900,22,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="terminListeTagesansicht_Click"/>
-
+        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="584.2,30,0,0" VerticalAlignment="Top" Width="270" Height="71" FontSize="36" Grid.Column="1" Click="Wochenansicht_Button_Click"/>
+        <Button x:Name="neuerTerminTagesansicht" Content="Neuer Termin" HorizontalAlignment="Left" Margin="49,30,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="neuerTerminTagesansicht_Click"/>
+        <Button x:Name="kategorienlisteTagesansicht" Content="Kategorien" HorizontalAlignment="Left" Margin="336,30,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="kategorienlisteTagesansicht_Click"/>
+        <Button x:Name="terminListeTagesansicht" Content="Terminliste" HorizontalAlignment="Left" Margin="144.2,30,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="terminListeTagesansicht_Click"/>
+        <Button x:Name="ExitButtonT" Content="Exit" HorizontalAlignment="Left" Margin="985.2,30,30,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="ExitButtonT_Click"/>
 
 
         <Canvas x:Name="tagkalender" Height="800" Width="1800" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0">

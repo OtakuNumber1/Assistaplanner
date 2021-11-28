@@ -26,11 +26,7 @@ namespace Assistaplanner
 
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
+ 
         private void terminListeTagesansicht_Click(object sender, RoutedEventArgs e)
         {
             TerminListe termine = new TerminListe();
@@ -58,6 +54,11 @@ namespace Assistaplanner
             MainWindow mainWindow = new MainWindow();
             this.Close();
             mainWindow.ShowDialog();
+        }
+
+        private void ExitButtonT_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
