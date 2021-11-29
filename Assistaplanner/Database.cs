@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
-using System.IO;
-using System.Reflection;
 
 namespace Assistaplanner
 {
@@ -16,8 +14,7 @@ namespace Assistaplanner
         public static SQLiteConnection DatabaseConnection()
         {
             SQLiteConnection myConnection;
-            string path = Directory.GetCurrentDirectory();
-            Console.WriteLine(path);
+
             myConnection = new SQLiteConnection(@"Data Source= ../../db/assistadb.db");
 
             return myConnection;

@@ -22,13 +22,19 @@ namespace Assistaplanner
     /// </summary>
     public partial class ShowKategorien : Window
     {
+
         public object KategorieName { get; private set; }
 
+        List<TerminKategorie> kat = SQLiteDataAccess.LoadKategorien();
+           
         public ShowKategorien()
         {
             InitializeComponent();
+          
             List<TerminKategorie> kategorien = KategorienLaden();
-            kategorienliste.ItemsSource = kategorien;
+         
+
+           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -64,6 +70,18 @@ namespace Assistaplanner
                     KategorienLaden();
                 }
             }
+        }
+
+        private void kategorienliste_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<TerminKategorie> kat = SQLiteDataAccess.LoadKategorien();
+            kategorienliste.ItemsSource = kat;
+
         }
     }
 }

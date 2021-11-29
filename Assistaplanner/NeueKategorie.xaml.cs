@@ -40,6 +40,7 @@ namespace Assistaplanner
             var result = command.ExecuteNonQuery();
 
             Console.WriteLine(result);
+           
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -50,6 +51,7 @@ namespace Assistaplanner
         private void KategorieHinzufügenButton_Click(object sender, RoutedEventArgs e)
         {
             CreateKategorie();
+      
             Close();
         }
     }

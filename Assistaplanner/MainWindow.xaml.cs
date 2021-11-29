@@ -26,6 +26,7 @@ namespace Assistaplanner
         public MainWindow()
         {
             InitializeComponent();
+         
         }
 
         
@@ -43,8 +44,16 @@ namespace Assistaplanner
             KategorienListe.ShowDialog();
             RenderTermine();
         }
+        private void TagesansichtButton_Click(object sender, RoutedEventArgs e)
+        {
 
-        private void terminLöschenButton_Click(object sender, RoutedEventArgs e)
+            Tagesansicht tagesansicht = new Tagesansicht("Montag");
+            tagesansicht.ShowDialog();
+            RenderTermine();
+        }
+     
+
+        private void TermineButton_Click(object sender, RoutedEventArgs e)
         {
             TerminListe termine = new TerminListe();
             termine.ShowDialog();
@@ -156,6 +165,66 @@ namespace Assistaplanner
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             RenderTermine();
+        }
+
+        private void Montag_Clicked(object sender, MouseButtonEventArgs e)
+        {
+            Tagesansicht tagesansicht = new Tagesansicht("Montag");
+            this.Close();
+            tagesansicht.ShowDialog();
+            RenderTermine();
+        }
+        private void dienstag_Clicked(object sender, MouseButtonEventArgs e)
+        {
+            Tagesansicht tagesansicht = new Tagesansicht("Dienstag");
+            this.Close();
+            tagesansicht.ShowDialog();
+            RenderTermine();
+        }
+
+        private void Mittwoch_Clicked(object sender, MouseButtonEventArgs e)
+        {
+            Tagesansicht tagesansicht = new Tagesansicht("Mittwoch");
+            this.Close();
+            tagesansicht.ShowDialog();
+            RenderTermine();
+        }
+
+        private void Donnerstag_Clicked(object sender, MouseButtonEventArgs e)
+        {
+            Tagesansicht tagesansicht = new Tagesansicht("Donnerstag");
+            this.Close();
+            tagesansicht.ShowDialog();
+            RenderTermine();
+        }
+
+        private void Freitag_Clicked(object sender, MouseButtonEventArgs e)
+        {
+            Tagesansicht tagesansicht = new Tagesansicht("Freitag");
+            this.Close();
+            tagesansicht.ShowDialog();
+            RenderTermine();
+        }
+
+        private void Samstag_Clicked(object sender, MouseButtonEventArgs e)
+        {
+            Tagesansicht tagesansicht = new Tagesansicht("Samstag");
+            this.Close();
+            tagesansicht.ShowDialog();
+            RenderTermine();
+        }
+
+        private void Sonntag_Clicked(object sender, MouseButtonEventArgs e)
+        {
+            Tagesansicht tagesansicht = new Tagesansicht("Sonntag");
+            this.Close();
+            tagesansicht.ShowDialog();
+            RenderTermine();
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

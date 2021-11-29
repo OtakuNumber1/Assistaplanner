@@ -18,8 +18,19 @@ jobs:
         with: 
           dotnet-version: 3.1.x
 
-      - run: dotnet restore ${( env.PROJECT_PATH )} 
+       
 
-      - run: dotnet build ${( env.PROJECT_PATH )} -c Release --no-restore 
+      - name: Install Dependencies
+        run: dotnet restore ${( env.PROJECT_PATH )} 
+       
+      - name: Install Dapper NuGetPackage
+        run: dotnet add Assistaplanner/Assistaplanner.csproj package Dapper --version 2.0.90
 
-      - run: dotnet publish ${( env.PROJECT_PATH )} -c Release --self-contained -r win-x64 -p:PublishSingleFile
+      - name: Install SQLite NuGetPackage
+        run: dotnet add Assistaplanner/Assistaplanner.csproj package SQLite --version 3.13.0
+
+      - name: Build
+        run: dotnet build ${( env.PROJECT_PATH )} -c Release --no-restore 
+
+      - name: Publish
+        run: dotnet publish ${( env.PROJECT_PATH )} -c Release --self-contained -r win-x64 -p:PublishSingleFile
