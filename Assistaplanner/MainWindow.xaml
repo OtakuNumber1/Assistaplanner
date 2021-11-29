@@ -59,8 +59,8 @@
                     <ColumnDefinition Width="250*"/>
                     <ColumnDefinition Width="250*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Dienstag" x:Name="dienstag" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="58" Width="220" FontSize="36" MouseDoubleClick="dienstag_Clicked"/>
-                <Label Content="Montag" x:Name="montag" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Height="58" Width="220" FontSize="36" MouseDoubleClick="Montag_Clicked"/>
+                <Label Content="Montag" x:Name="montag" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36" MouseDoubleClick="Montag_Clicked"/>
+                <Label Content="Dienstag" x:Name="dienstag" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36" MouseDoubleClick="dienstag_Clicked"/>
                 <Label Content="Mittwoch" x:Name="mittwoch" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="230" FontSize="36" MouseDoubleClick="Mittwoch_Clicked"/>
                 <Label Content="Donnerstag" x:Name="donnerstag" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36" MouseDoubleClick="Donnerstag_Clicked"/>
                 <Label Content="Freitag" x:Name="freitag" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58" Width="220" FontSize="36" MouseDoubleClick="Freitag_Clicked"/>

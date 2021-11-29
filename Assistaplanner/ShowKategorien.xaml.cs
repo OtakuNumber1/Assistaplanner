@@ -24,6 +24,8 @@ namespace Assistaplanner
     {
         public object KategorieName { get; private set; }
 
+        List<TerminKategorie> kat = SQLiteDataAccess.LoadKategorien();
+           
         public ShowKategorien()
         {
             InitializeComponent();

@@ -52,9 +52,9 @@ namespace Assistaplanner
                     int bisMinuten = termin.bisMinute + 60 * termin.bisStunde;
 
                     Button button = new Button();
-                    button.Width = tagkalender.ActualWidth * 250 / (125 + 250 * 7);
+                    button.Width = tagkalender.ActualWidth * 250 / (125 + 250 * 4);
                     button.Height = Math.Max(0, bisMinuten - startMinute) / (24.0 * 60.0) * totalHeight;
-                    button.Margin = new Thickness(point.X, startY + startMinute / (24.0 * 60.0) * totalHeight, 0, 0);
+                    button.Margin = new Thickness(point.X - 171, startY + startMinute / (24.0 * 60.0) * totalHeight, 0, 0);
                     button.Content = termin.TerminTitel;
                     List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
 
