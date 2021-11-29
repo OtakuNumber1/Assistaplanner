@@ -42,6 +42,14 @@ namespace Assistaplanner
 
             }
         }
+        public static List<Kalenderwoche> LoadKalenderwochen()
+        {
+            using(IDbConnection cnn = Database.DatabaseConnection())
+            {
+                var output = cnn.Query<Kalenderwoche>("select * from kalenderwoche", new DynamicParameters());
+                return output.ToList();
+            }
+        }
 
 
     }

@@ -51,11 +51,34 @@ namespace Assistaplanner
 
             SQLiteCommand command = new SQLiteCommand(insertTerminQuery, conn);
 
+
+
             Database.IsConnectionOpen(conn);
-            command.Parameters.AddWithValue("@terminKategorie", KategoriePicker.SelectedValue);
-            command.Parameters.AddWithValue("@terminTitel", TitelText.Text);
+            if (KategoriePicker.SelectedValue != null)
+            {
+                command.Parameters.AddWithValue("@terminKategorie", KategoriePicker.SelectedValue);
+            }
+            else
+            {
+                errorText.Text = "Es wurde keine Kategorie ausgewählt";
+            }
+            if (TitelText.Text != null)
+            {
+                command.Parameters.AddWithValue("@terminTitel", TitelText.Text);
+            }
+            else
+            {
+                errorText.Text = "Bitte geben Sie einen Titel ein!";
+            }
             command.Parameters.AddWithValue("@terminUntertitel", UntertitelText.Text);
-            command.Parameters.AddWithValue("@wochentag", wochentagBox.SelectedItem);
+            if (wochentagBox.SelectedItem != null)
+            {
+                command.Parameters.AddWithValue("@wochentag", wochentagBox.SelectedItem);
+            }
+            else
+            {
+                errorText.Text = "Geben Sie bitte einen Wochentag an";
+            }
             command.Parameters.AddWithValue("@vonStunde", vonStunde.Text);
             command.Parameters.AddWithValue("@vonMinute", vonMinute.Text);
             command.Parameters.AddWithValue("@bisStunde", bisStunde.Text);
@@ -70,6 +93,6 @@ namespace Assistaplanner
         {
 
         }
-        
+     
     }
 }
