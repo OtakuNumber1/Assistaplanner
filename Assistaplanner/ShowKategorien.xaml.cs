@@ -56,6 +56,8 @@ namespace Assistaplanner
         {
             NeueKategorie neuekat = new NeueKategorie();
             neuekat.Show();
+            List<TerminKategorie> kat = SQLiteDataAccess.LoadKategorien();
+            
         }
 
         private void KategorieLöschenButton_Click(object sender, RoutedEventArgs e)
