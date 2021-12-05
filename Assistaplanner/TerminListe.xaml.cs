@@ -21,6 +21,7 @@ namespace Assistaplanner
     /// </summary>
     public partial class TerminListe : Window
     {
+        Termin lastSelectedTermin;
         public TerminListe()
         {
             InitializeComponent();
@@ -45,6 +46,21 @@ namespace Assistaplanner
                     TermineLaden();
                 }
             }
+        }
+
+        private void enableEditButton(object sender, SelectionChangedEventArgs e)
+        {
+            terminBearbeitenButton.IsEnabled = true;
+            lastSelectedTermin =(Termin) terminDataGrid.SelectedItem;
+        }
+
+        private void editButtonClick(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("editButtonClicked");
+            TerminBearbeiten tb = new TerminBearbeiten(lastSelectedTermin);
+            tb.ShowDialog();
+            List<Termin> aktuelleTermine = SQLiteDataAccess.LoadTermine();
+            terminDataGrid.ItemsSource = aktuelleTermine;
         }
     }
 }

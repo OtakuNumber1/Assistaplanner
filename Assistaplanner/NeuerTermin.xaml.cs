@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace Assistaplanner
             KategoriePicker.DisplayMemberPath = "KategorieName";
             KategoriePicker.SelectedValuePath = "terminKategorieID";
             wochentagBox.ItemsSource = wochentage;
+            
 
 
         }
@@ -41,7 +43,6 @@ namespace Assistaplanner
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             InsertIntoDB();
-            Close();
         }
         public void InsertIntoDB()
         {
@@ -51,17 +52,89 @@ namespace Assistaplanner
 
             SQLiteCommand command = new SQLiteCommand(insertTerminQuery, conn);
 
+
+
             Database.IsConnectionOpen(conn);
-            command.Parameters.AddWithValue("@terminKategorie", KategoriePicker.SelectedValue);
-            command.Parameters.AddWithValue("@terminTitel", TitelText.Text);
+            bool isError = false;
+
+
+            //Kategorie überprüfen
+            if (KategoriePicker.SelectedValue != null)
+            {
+                command.Parameters.AddWithValue("@terminKategorie", KategoriePicker.SelectedValue);
+            }
+            else
+            {
+                errorText.Text = "Es wurde keine Kategorie ausgewählt";
+                isError = true;
+
+
+            }
+
+            //Bis-Zeit überprüfen
+            if (bisStunde.Text.Length != 0 & bisMinute.Text.Length != 0)
+            {
+                command.Parameters.AddWithValue("@bisStunde", bisStunde.Text);
+                command.Parameters.AddWithValue("@bisMinute", bisMinute.Text);
+            }
+            else
+            {
+                errorText.Text = "Geben Sie bitte eine Endzeit ein!";
+                isError = true;
+
+            }
+
+            //Von-Zeit überprüfen
+            if (vonStunde.Text.Length != 0 & vonMinute.Text.Length != 0)
+            {
+                command.Parameters.AddWithValue("@vonStunde", vonStunde.Text);
+                command.Parameters.AddWithValue("@vonMinute", vonMinute.Text);
+            }
+            else
+            {
+                errorText.Text = "Geben sie eine Startzeit ein!";
+                isError = true;
+
+            }
+
+            //Wochentag überprüfen
+            if (wochentagBox.SelectedItem != null)
+            {
+                command.Parameters.AddWithValue("@wochentag", wochentagBox.SelectedItem);
+            }
+            else
+            {
+                errorText.Text = "Geben Sie bitte einen Wochentag an";
+                isError = true;
+
+            }
+
+            //Titel überprüfen
+            if (TitelText.Text.Length != 0)
+            {
+                command.Parameters.AddWithValue("@terminTitel", TitelText.Text);
+            }
+            else
+            {
+                errorText.Text = "Bitte geben Sie einen Titel ein!";
+                isError = true;
+
+            }
+
+            //Untertitel eintragen
             command.Parameters.AddWithValue("@terminUntertitel", UntertitelText.Text);
-            command.Parameters.AddWithValue("@wochentag", wochentagBox.SelectedItem);
-            command.Parameters.AddWithValue("@vonStunde", vonStunde.Text);
-            command.Parameters.AddWithValue("@vonMinute", vonMinute.Text);
-            command.Parameters.AddWithValue("@bisStunde", bisStunde.Text);
-            command.Parameters.AddWithValue("@bisMinute", bisMinute.Text);
+
+
+            //Beschreibung einfügen
             command.Parameters.AddWithValue("@beschreibung", BeschreibungText.Text);
-            var result = command.ExecuteNonQuery();
+
+            //Nicht in DB schicken wenn Fehler vorliegt
+            if(isError == false)
+            {
+                var result = command.ExecuteNonQuery();
+                Close();
+            }
+           
         }
 
        
@@ -70,6 +143,6 @@ namespace Assistaplanner
         {
 
         }
-        
+     
     }
 }

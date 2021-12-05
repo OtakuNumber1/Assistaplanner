@@ -15,7 +15,7 @@ namespace Assistaplanner
         public string Wochentag { get; set; }
         public int vonStunde { get; set; }
         public int vonMinute { get; set; }
-         public int bisStunde { get; set; }
+        public int bisStunde { get; set; }
         public int bisMinute { get; set; }
         public string beschreibung { get; set; }
     }

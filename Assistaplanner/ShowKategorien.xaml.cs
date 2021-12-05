@@ -37,13 +37,7 @@ namespace Assistaplanner
            
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //Bearbeitknopf
-            List<TerminKategorie> kat = SQLiteDataAccess.LoadKategorien();
-            kategorienliste.ItemsSource = kat;
-
-        }
+        
         public static List<TerminKategorie> KategorienLaden()
         {
            
@@ -56,11 +50,11 @@ namespace Assistaplanner
         {
             NeueKategorie neuekat = new NeueKategorie();
             neuekat.Show();
-            List<TerminKategorie> kat = SQLiteDataAccess.LoadKategorien();
-            
+            List<TerminKategorie> aktuelleTermine = SQLiteDataAccess.LoadKategorien();
+            kategorienliste.ItemsSource = aktuelleTermine;
         }
 
-        private void KategorieLöschenButton_Click(object sender, RoutedEventArgs e)
+            private void KategorieLöschenButton_Click(object sender, RoutedEventArgs e)
         {
             TerminKategorie selectedKategorie = kategorienliste.SelectedItem as TerminKategorie;
 
@@ -69,9 +63,10 @@ namespace Assistaplanner
                 using (IDbConnection cnn = Database.DatabaseConnection())
                 {
                     cnn.Query<TerminKategorie>("delete from terminKategorie where terminKategorieID=" + idOfKategorie, new DynamicParameters());
-                    KategorienLaden();
+                    
                 }
             }
+            kategorienliste.ItemsSource = KategorienLaden();
         }
 
         private void kategorienliste_SelectionChanged(object sender, SelectionChangedEventArgs e)
