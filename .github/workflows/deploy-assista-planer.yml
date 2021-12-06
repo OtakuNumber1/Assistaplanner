@@ -35,7 +35,7 @@ jobs:
         run: nuget restore Assistaplanner.sln
         
       - name: Build Solution
-        run: msbuild Assistaplanner.sln0
+        run: msbuild Assistaplanner.sln
 
       - name: Build
         run: dotnet build ${( env.PROJECT_PATH )} -c Release --no-restore 
