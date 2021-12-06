@@ -20,8 +20,10 @@ namespace Assistaplanner
     /// </summary>
     public partial class NeuerTermin : Window
     {
-        public NeuerTermin()
+        private int kw;
+        public NeuerTermin(int kw)
         {
+            this.kw = kw;
             List<string> wochentage = new List<string> { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
             InitializeComponent();
             List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
@@ -47,7 +49,7 @@ namespace Assistaplanner
         {
             SQLiteConnection conn = Database.DatabaseConnection();
 
-            string insertTerminQuery = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
+            string insertTerminQuery = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`kalenderwoche`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @kalenderwoche, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
 
             SQLiteCommand command = new SQLiteCommand(insertTerminQuery, conn);
 
@@ -70,6 +72,7 @@ namespace Assistaplanner
             {
                 errorText.Text = "Bitte geben Sie einen Titel ein!";
             }
+            command.Parameters.AddWithValue("@kalenderwoche", kw);
             command.Parameters.AddWithValue("@terminUntertitel", UntertitelText.Text);
             if (wochentagBox.SelectedItem != null)
             {

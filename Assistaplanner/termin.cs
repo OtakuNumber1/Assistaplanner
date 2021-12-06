@@ -12,6 +12,7 @@ namespace Assistaplanner
         public int TerminKategorie { get; set; }
         public string TerminTitel { get; set; }
         public string TerminUntertitel { get; set; }
+        public int Kalenderwoche { get; set;}
         public string Wochentag { get; set; }
         public int vonStunde { get; set; }
         public int vonMinute { get; set; }

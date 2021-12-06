@@ -26,14 +26,17 @@ namespace Assistaplanner
         public MainWindow()
         {
             InitializeComponent();
-         
+            for(int i=1; i < 53; i++)
+            {
+                kalenderWochenPicker.Items.Add(i);
+            }
         }
 
         
 
         private void neuerTerminButton_Click(object sender, RoutedEventArgs e)
         {
-            NeuerTermin neuerTermin = new NeuerTermin();
+            NeuerTermin neuerTermin = new NeuerTermin((int) kalenderWochenPicker.SelectedValue);
             neuerTermin.ShowDialog();
             RenderTermine();
         }
@@ -47,7 +50,7 @@ namespace Assistaplanner
         private void TagesansichtButton_Click(object sender, RoutedEventArgs e)
         {
 
-            Tagesansicht tagesansicht = new Tagesansicht("Montag");
+            Tagesansicht tagesansicht = new Tagesansicht("Montag",(int) kalenderWochenPicker.SelectedValue);
             tagesansicht.ShowDialog();
             RenderTermine();
         }
@@ -67,7 +70,7 @@ namespace Assistaplanner
             kalender.Children.Clear();
             kalender.Children.Add(kalenderGrid);
   
-            List<Termin> termine = SQLiteDataAccess.LoadTermine();
+            List<Termin> termine = SQLiteDataAccess.LoadTermineOfKalenderwoche((int) kalenderWochenPicker.SelectedValue);
             foreach (Termin termin in termine) {
                 Label label = null;
                 switch (termin.Wochentag)
@@ -164,19 +167,18 @@ namespace Assistaplanner
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            RenderTermine();
         }
 
         private void Montag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Montag");
+            Tagesansicht tagesansicht = new Tagesansicht("Montag", (int) kalenderWochenPicker.SelectedValue);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
         }
         private void dienstag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Dienstag");
+            Tagesansicht tagesansicht = new Tagesansicht("Dienstag", (int)kalenderWochenPicker.SelectedValue);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
@@ -184,7 +186,7 @@ namespace Assistaplanner
 
         private void Mittwoch_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Mittwoch");
+            Tagesansicht tagesansicht = new Tagesansicht("Mittwoch", (int)kalenderWochenPicker.SelectedValue);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
@@ -192,7 +194,7 @@ namespace Assistaplanner
 
         private void Donnerstag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Donnerstag");
+            Tagesansicht tagesansicht = new Tagesansicht("Donnerstag", (int)kalenderWochenPicker.SelectedValue);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
@@ -200,7 +202,7 @@ namespace Assistaplanner
 
         private void Freitag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Freitag");
+            Tagesansicht tagesansicht = new Tagesansicht("Freitag", (int)kalenderWochenPicker.SelectedValue);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
@@ -208,7 +210,7 @@ namespace Assistaplanner
 
         private void Samstag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Samstag");
+            Tagesansicht tagesansicht = new Tagesansicht("Samstag", (int)kalenderWochenPicker.SelectedValue);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
@@ -216,7 +218,7 @@ namespace Assistaplanner
 
         private void Sonntag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Sonntag");
+            Tagesansicht tagesansicht = new Tagesansicht("Sonntag", (int)kalenderWochenPicker.SelectedValue);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
@@ -225,6 +227,11 @@ namespace Assistaplanner
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void kalenderwocheChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RenderTermine();
         }
     }
 }
