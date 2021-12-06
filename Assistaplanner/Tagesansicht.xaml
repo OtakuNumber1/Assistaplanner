@@ -16,10 +16,10 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="584.2,30,0,0" VerticalAlignment="Top" Width="270" Height="71" FontSize="36" Grid.Column="1" Click="Wochenansicht_Button_Click"/>
+        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="684,30,0,0" VerticalAlignment="Top" Width="270" Height="71" FontSize="36" Grid.Column="1" Click="Wochenansicht_Button_Click"/>
         <Button x:Name="neuerTerminTagesansicht" Content="Neuer Termin" HorizontalAlignment="Left" Margin="49,30,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="neuerTerminTagesansicht_Click"/>
         <Button x:Name="kategorienlisteTagesansicht" Content="Kategorien" HorizontalAlignment="Left" Margin="336,30,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="kategorienlisteTagesansicht_Click"/>
-        <Button x:Name="terminListeTagesansicht" Content="Terminliste" HorizontalAlignment="Left" Margin="144.2,30,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="terminListeTagesansicht_Click"/>
+        <Button x:Name="terminListeTagesansicht" Content="Terminliste" HorizontalAlignment="Left" Margin="204,30,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="terminListeTagesansicht_Click"/>
         <Button x:Name="ExitButtonT" Content="Exit" HorizontalAlignment="Left" Margin="985.2,30,30,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="ExitButtonT_Click"/>
 
 
@@ -91,7 +91,7 @@
 
             </Grid>
         </Canvas>
-        <TextBlock x:Name="wochentagText" Grid.Column="1" HorizontalAlignment="Left" Margin="234,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="80" Width="234" FontSize="48" Grid.RowSpan="2"/>
+        <TextBlock x:Name="wochentagText" Grid.Column="1" HorizontalAlignment="Left" Margin="204,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="80" Width="318" FontSize="48" Grid.RowSpan="2"/>
 
 
 

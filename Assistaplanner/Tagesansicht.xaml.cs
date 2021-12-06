@@ -20,11 +20,14 @@ namespace Assistaplanner
     public partial class Tagesansicht : Window
     {
         private String Wochentag;
-        public Tagesansicht(string Wochentag)
+        private int kw;
+        public Tagesansicht(string Wochentag, int kw)
         {
             InitializeComponent();
+            
+
             this.Wochentag = Wochentag;
-          
+            this.kw = kw;
             wochentagText.Text = Wochentag;
 
         }
@@ -35,7 +38,7 @@ namespace Assistaplanner
             tagkalender.Children.Clear();
             tagkalender.Children.Add(tagkalenderGrid);
 
-            List<Termin> termine = SQLiteDataAccess.LoadTermineFromDay(Wochentag);
+            List<Termin> termine = SQLiteDataAccess.LoadTermineFromDayOfKalenderwoche(Wochentag, kw);
             foreach (Termin termin in termine)
             {
                 Console.WriteLine("1");
@@ -129,7 +132,7 @@ namespace Assistaplanner
 
         private void neuerTerminTagesansicht_Click(object sender, RoutedEventArgs e)
         {
-            NeuerTermin neuerTermin = new NeuerTermin();
+            NeuerTermin neuerTermin = new NeuerTermin(kw);
             neuerTermin.ShowDialog();
             RenderTermine(Wochentag);
         }
