@@ -38,7 +38,13 @@ jobs:
         run: msbuild Assistaplanner.sln
 
       - name: Build
-        run: dotnet build ${( env.PROJECT_PATH )} -c Release --no-restore 
+        run: dotnet build ${( env.PROJECT_PATH )} -c Release --no-restore /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
 
       - name: Publish
         run: dotnet publish ${( env.PROJECT_PATH )} -c Release --self-contained -r win-x64 -p:PublishSingleFile
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+            name: published_webapp
+            path: bin\Release\Publish
