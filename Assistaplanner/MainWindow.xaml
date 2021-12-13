@@ -96,6 +96,8 @@
         </Canvas>
         <Label x:Name="kwLabel" Content="KW:" HorizontalAlignment="Left" Height="66" Margin="139,141,0,0" VerticalAlignment="Top" Width="100" Grid.RowSpan="2" Grid.Column="1" FontSize="48"/>
         <ComboBox x:Name="kalenderWochenPicker" Grid.Column="1" HorizontalAlignment="Left" Margin="264,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="145" Height="54" Grid.ColumnSpan="2" SelectionChanged="kalenderwocheChanged" FontSize="36"/>
+        <Button x:Name="vorherigeWocheButton" Content="Vorherige W." HorizontalAlignment="Left" Margin="565,134,0,0" VerticalAlignment="Top" Width="270" Click="Button_Click" Height="76" FontSize="36" RenderTransformOrigin="2.837,1.322" Grid.Column="2" Grid.RowSpan="2"/>
+        <Button x:Name="vorherigeWocheButton" Content="Nächste W." HorizontalAlignment="Left" Margin="42,140,0,0" VerticalAlignment="Top" Width="270" Click="Button_Click" Height="76" FontSize="36" RenderTransformOrigin="2.837,1.322" Grid.RowSpan="2"/>
     </Grid>
 
 </Window>
