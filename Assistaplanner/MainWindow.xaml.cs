@@ -233,5 +233,21 @@ namespace Assistaplanner
         {
             RenderTermine();
         }
+
+        private void nächsteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (kalenderWochenPicker.SelectedItem != null) 
+            {
+                kalenderWochenPicker.SelectedValue = ((int)kalenderWochenPicker.SelectedValue) + 1;
+            }
+        }
+
+        private void vorherigeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (kalenderWochenPicker.SelectedItem != null)
+            {
+                kalenderWochenPicker.SelectedValue = ((int)kalenderWochenPicker.SelectedValue) - 1;
+            }
+        }
     }
 }
