@@ -139,7 +139,7 @@ namespace Assistaplanner
 
         private void Wochenansicht_Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow(kw);
             this.Close();
             mainWindow.ShowDialog();
         }

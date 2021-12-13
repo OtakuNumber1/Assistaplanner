@@ -26,18 +26,32 @@ namespace Assistaplanner
         public MainWindow()
         {
             InitializeComponent();
-            for(int i=1; i < 53; i++)
+            init(null);
+            RenderTermine();
+        }
+
+        public MainWindow(int woche) {
+            InitializeComponent();
+            init(woche);
+        }
+        private void init(int? woche) {
+            for (int i = 1; i < 53; i++)
             {
                 kalenderWochenPicker.Items.Add(i);
-               
+
             }
             if (kalenderWochenPicker.SelectedItem == null)
             {
-                kalenderWochenPicker.SelectedValue = +1;
+                if (woche == null)
+                {
+                    kalenderWochenPicker.SelectedValue = +1;
+                }
+                else {
+                    kalenderWochenPicker.SelectedValue = woche;
+                }
+               
             }
-        }
-
-        
+                    }
 
         private void neuerTerminButton_Click(object sender, RoutedEventArgs e)
         {
@@ -104,7 +118,6 @@ namespace Assistaplanner
                 }
                 if (label != null)
                 {
-                    Console.WriteLine("Label");
                     Point point = label.TransformToAncestor(kalender).Transform(new Point(0, 0));
                     double startY = kalender.ActualHeight / 26.0 * 2;
                     double totalHeight = kalender.ActualHeight * 24.0 / 26;
