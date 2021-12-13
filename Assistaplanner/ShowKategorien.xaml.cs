@@ -22,22 +22,22 @@ namespace Assistaplanner
     /// </summary>
     public partial class ShowKategorien : Window
     {
+
         public object KategorieName { get; private set; }
 
+        List<TerminKategorie> kat = SQLiteDataAccess.LoadKategorien();
+           
         public ShowKategorien()
         {
             InitializeComponent();
+          
             List<TerminKategorie> kategorien = KategorienLaden();
-            kategorienliste.ItemsSource = kategorien;
+         
+
+           
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //Bearbeitknopf
-            List<TerminKategorie> kat = SQLiteDataAccess.LoadKategorien();
-            kategorienliste.ItemsSource = kat;
-
-        }
+        
         public static List<TerminKategorie> KategorienLaden()
         {
            
@@ -50,9 +50,11 @@ namespace Assistaplanner
         {
             NeueKategorie neuekat = new NeueKategorie();
             neuekat.Show();
+            List<TerminKategorie> aktuelleTermine = SQLiteDataAccess.LoadKategorien();
+            kategorienliste.ItemsSource = aktuelleTermine;
         }
 
-        private void KategorieLöschenButton_Click(object sender, RoutedEventArgs e)
+            private void KategorieLöschenButton_Click(object sender, RoutedEventArgs e)
         {
             TerminKategorie selectedKategorie = kategorienliste.SelectedItem as TerminKategorie;
 
@@ -61,9 +63,22 @@ namespace Assistaplanner
                 using (IDbConnection cnn = Database.DatabaseConnection())
                 {
                     cnn.Query<TerminKategorie>("delete from terminKategorie where terminKategorieID=" + idOfKategorie, new DynamicParameters());
-                    KategorienLaden();
+                    
                 }
             }
+            kategorienliste.ItemsSource = KategorienLaden();
+        }
+
+        private void kategorienliste_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<TerminKategorie> kat = SQLiteDataAccess.LoadKategorien();
+            kategorienliste.ItemsSource = kat;
+
         }
     }
 }
