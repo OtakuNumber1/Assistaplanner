@@ -29,6 +29,11 @@ namespace Assistaplanner
             for(int i=1; i < 53; i++)
             {
                 kalenderWochenPicker.Items.Add(i);
+               
+            }
+            if (kalenderWochenPicker.SelectedItem == null)
+            {
+                kalenderWochenPicker.SelectedValue = +1;
             }
         }
 
@@ -232,6 +237,31 @@ namespace Assistaplanner
         private void kalenderwocheChanged(object sender, SelectionChangedEventArgs e)
         {
             RenderTermine();
+        }
+
+        private void nächsteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (kalenderWochenPicker.SelectedItem != null)
+            {
+                if ((int)kalenderWochenPicker.SelectedValue != 52)
+                    kalenderWochenPicker.SelectedValue = ((int)kalenderWochenPicker.SelectedValue) + 1;
+            }
+        }
+        
+    
+
+        private void vorherigeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+
+
+            if (kalenderWochenPicker.SelectedItem != null)
+            {
+                if ((int)kalenderWochenPicker.SelectedValue != 1)
+                {
+                    kalenderWochenPicker.SelectedValue = ((int)kalenderWochenPicker.SelectedValue) - 1;
+                }
+            }
         }
     }
 }
