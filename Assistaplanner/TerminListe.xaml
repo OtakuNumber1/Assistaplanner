@@ -7,8 +7,15 @@
         mc:Ignorable="d"
         Title="TerminListe" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="terminDataGrid" HorizontalAlignment="Left" Height="350" Margin="10,59,0,0" VerticalAlignment="Top" IsReadOnly="True" Width="772" SelectionChanged="enableEditButton" />
-        <Button x:Name="terminLöschenButton" Content="Termin löschen" HorizontalAlignment="Left" Margin="685,10,0,0" VerticalAlignment="Top" Width="97" Click="terminLöschenButton_Click"/>
+        <DataGrid x:Name="terminDataGrid" HorizontalAlignment="Left" Height="350" Margin="10,59,0,0" VerticalAlignment="Top" IsReadOnly="True" Width="772" SelectionChanged="enableEditButton" AutoGenerateColumns="False">
+        <DataGrid.Columns>
+                <DataGridTextColumn Header="Titel" Binding="{Binding TerminTitel}"/>
+                <DataGridTextColumn Header="Untertitel" Binding="{Binding TerminUntertitel}"/>
+                <DataGridTextColumn Header="Kalenderwoche" Binding="{Binding Kalenderwoche}"/>
+                <DataGridTextColumn Header="Wochentag" Binding="{Binding Wochentag}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="terminLöschenButton" Content="Termin löschen" HorizontalAlignment="Left" Margin="685,10,0,0" VerticalAlignment="Top" Width="97" Click="terminLöschenButton_Click" IsEnabled="False"/>
         <Button x:Name="listeAktualisierenButton" Content="Liste aktualisieren" HorizontalAlignment="Left" Margin="560,10,0,0" VerticalAlignment="Top" Width="105"/>
         <Label Content="Termine:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="195" Height="36" FontFamily="Segoe UI Black" FontSize="24"/>
         <Button x:Name="terminBearbeitenButton" Content="Termin bearbeiten" IsEnabled="False" HorizontalAlignment="Left" Margin="433,10,0,0" VerticalAlignment="Top" Width="103" Click="editButtonClick"/>
