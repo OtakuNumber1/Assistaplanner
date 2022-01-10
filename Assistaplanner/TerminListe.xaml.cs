@@ -50,8 +50,18 @@ namespace Assistaplanner
 
         private void enableEditButton(object sender, SelectionChangedEventArgs e)
         {
-            terminBearbeitenButton.IsEnabled = true;
-            lastSelectedTermin =(Termin) terminDataGrid.SelectedItem;
+            if (terminDataGrid.SelectedItem != null)
+            {
+                terminBearbeitenButton.IsEnabled = true;
+                terminLöschenButton.IsEnabled = true;
+                lastSelectedTermin = (Termin)terminDataGrid.SelectedItem;
+            }
+            else
+            {
+                terminLöschenButton.IsEnabled = false;
+                terminBearbeitenButton.IsEnabled = false;
+            }
+            
         }
 
         private void editButtonClick(object sender, RoutedEventArgs e)
