@@ -24,7 +24,7 @@ namespace Assistaplanner
         public Tagesansicht(string Wochentag, int kw)
         {
             InitializeComponent();
-            
+            int einträge;
 
             this.Wochentag = Wochentag;
             this.kw = kw;
@@ -47,12 +47,17 @@ namespace Assistaplanner
                 if (label != null)
                 {
                     
+
+
                     Console.WriteLine("Label");
                     Point point = label.TransformToAncestor(tagkalender).Transform(new Point(0, 0));
                     double startY = tagkalender.ActualHeight / 26.0 * 2;
                     double totalHeight = tagkalender.ActualHeight * 24.0 / 26;
                     int startMinute = termin.vonMinute + 60 * termin.vonStunde;
                     int bisMinuten = termin.bisMinute + 60 * termin.bisStunde;
+
+                    
+
 
                     Button button = new Button();
                     button.Width = tagkalender.ActualWidth * 250 / (125 + 250 * 4);
@@ -111,9 +116,11 @@ namespace Assistaplanner
 
             return color;
         }
-
-
        
+
+        // liste mit allen Terminen termine einfüg dann beim rendereing die temrine vergleichechen wenn sie isch überlappen anfang mit ende und ende mit anfang vergleichen 
+
+
 
         private void terminListeTagesansicht_Click(object sender, RoutedEventArgs e)
         {
