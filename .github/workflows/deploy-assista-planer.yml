@@ -38,8 +38,4 @@ jobs:
       - name: Build Solution
         run: msbuild Assistaplanner.sln /p:platform="Any CPU" /p:configuration="Release"
         
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1.0.0
-        with:
-         name: AssistaPlaner
-         path: "./db"
+
