@@ -22,8 +22,11 @@ namespace Assistaplanner
     /// </summary>
     public partial class MainWindow : Window
     {
-        int kw;
-        int N;
+        
+        /*public MainWindow()
+        {
+            
+        }*/
         public MainWindow()
         {
            
@@ -33,7 +36,7 @@ namespace Assistaplanner
                 kalenderWochenPicker.Items.Add(i);
                
             }
-           kalenderWochenPicker.SelectedItem = N;
+         //  kalenderWochenPicker.SelectedItem =kw;
             if (kalenderWochenPicker.SelectedItem == null)
             {
                 kalenderWochenPicker.SelectedValue = +1;
@@ -175,6 +178,8 @@ namespace Assistaplanner
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            RenderTermine();
+
         }
 
         private void Montag_Clicked(object sender, MouseButtonEventArgs e)
@@ -240,7 +245,7 @@ namespace Assistaplanner
         private void kalenderwocheChanged(object sender, SelectionChangedEventArgs e)
         {
             RenderTermine();
-            N = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
+           // kw = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
         }
 
         private void nächsteButton_Click(object sender, RoutedEventArgs e)
@@ -249,7 +254,7 @@ namespace Assistaplanner
             {
                 if ((int)kalenderWochenPicker.SelectedValue != 52)
                     kalenderWochenPicker.SelectedValue = ((int)kalenderWochenPicker.SelectedValue) + 1;
-                N = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
+               // kw = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
             }
         }
         
@@ -265,7 +270,7 @@ namespace Assistaplanner
                 if ((int)kalenderWochenPicker.SelectedValue != 1)
                 {
                     kalenderWochenPicker.SelectedValue = ((int)kalenderWochenPicker.SelectedValue) - 1;
-                    N = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
+                   //  kw = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
                 }
             }
         }
