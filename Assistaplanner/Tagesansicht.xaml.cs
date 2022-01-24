@@ -1,5 +1,8 @@
-﻿using System;
+﻿using iTextSharp.text;
+
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +14,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
+
+
+using iTextSharp.text.pdf;
+
 
 namespace Assistaplanner
 {
@@ -24,7 +32,7 @@ namespace Assistaplanner
         public Tagesansicht(string Wochentag, int kw)
         {
             InitializeComponent();
-            int einträge;
+            
 
             this.Wochentag = Wochentag;
             this.kw = kw;
@@ -163,7 +171,13 @@ namespace Assistaplanner
 
         private void PDFButtonT_Click(object sender, RoutedEventArgs e)
         {
+            Document pdfDoc = new Document(PageSize.LETTER, 40f, 40f, 60f, 60f);
+            PdfWriter writer = PdfWriter.GetInstance(pdfDoc, new FileStream("Test.pdf", FileMode.Create));
+            pdfDoc.Open();
 
+           
+
+            
         }
     }
 }

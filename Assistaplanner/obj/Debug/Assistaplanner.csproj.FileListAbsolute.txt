@@ -149,3 +149,6 @@ C:\Users\gpess\source\repos\vollständig\Assistaplanner\obj\Debug\Assistaplanner
 C:\Users\gpess\source\repos\vollständig\Assistaplanner\obj\Debug\Assistaplanner.csproj.CopyComplete
 C:\Users\gpess\source\repos\vollständig\Assistaplanner\obj\Debug\Assistaplanner.exe
 C:\Users\gpess\source\repos\vollständig\Assistaplanner\obj\Debug\Assistaplanner.pdb
+C:\Users\gpess\source\repos\vollständig\Assistaplanner\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\gpess\source\repos\vollständig\Assistaplanner\bin\Debug\itextsharp.dll
+C:\Users\gpess\source\repos\vollständig\Assistaplanner\bin\Debug\itextsharp.xml

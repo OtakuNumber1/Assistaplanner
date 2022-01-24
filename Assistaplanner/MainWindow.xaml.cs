@@ -1,6 +1,9 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -273,6 +276,23 @@ namespace Assistaplanner
                    //  kw = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
                 }
             }
+        }
+
+        private void PDFButtonT_Click(object sender, RoutedEventArgs e)
+        {
+
+            // Initialize document object
+            Document document = new Document();
+
+            // Add page
+          //  Page page = document.Pages.Add();
+
+            // Add text to new page
+          //  page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("Hello World!"));
+
+            // Save PDF 
+         //   document.Save("document.pdf");
+
         }
     }
 }
