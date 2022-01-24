@@ -73,3 +73,5 @@ C:\Users\yanni\OneDrive\Dokumente\assista\Assistaplanner\Assistaplanner\obj\Debu
 C:\Users\yanni\OneDrive\Dokumente\assista\Assistaplanner\Assistaplanner\obj\Debug\Assistaplanner.csproj.CoreCompileInputs.cache
 C:\Users\yanni\OneDrive\Dokumente\assista\Assistaplanner\Assistaplanner\obj\Debug\Assistaplanner.exe
 C:\Users\yanni\OneDrive\Dokumente\assista\Assistaplanner\Assistaplanner\obj\Debug\Assistaplanner.pdb
+C:\Users\yanni\OneDrive\Dokumente\assista\Assistaplanner\Assistaplanner\obj\Debug\TerminSerie.g.cs
+C:\Users\yanni\OneDrive\Dokumente\assista\Assistaplanner\Assistaplanner\obj\Debug\TerminSerie.baml
