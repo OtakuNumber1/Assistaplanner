@@ -24,6 +24,7 @@ namespace Assistaplanner
     {
         private int kw;
         private Selection terminSerienSelection;
+        private bool darfTerminSerieGeöffnetWerden;
         public NeuerTermin(int kw)
         {
             
@@ -133,10 +134,12 @@ namespace Assistaplanner
             termin.beschreibung = BeschreibungText.Text;
             if (isError == false)
             {
+                this.darfTerminSerieGeöffnetWerden = true;
                 return termin;
             }
             else
             {
+                this.darfTerminSerieGeöffnetWerden = false;
                 return null;
             }
         }
@@ -174,16 +177,6 @@ namespace Assistaplanner
             {
 
             }
-        }
-    
-        private void TerminSerieIsChecked(object sender, RoutedEventArgs e)
-        {
-            //Nur wen alles eingefügt ist Checkbox aktivieren lassen
-            Termin termin = allesAusgefülltCheck();
-            
-            TerminSerie ts = new TerminSerie(termin);
-            ts.ShowDialog();
-            
         }
 
         private void vonStunde_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -226,6 +219,18 @@ namespace Assistaplanner
 
             if (e.Handled == true && bisMinute.Text.Length != 0)
             {
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Termin termin = allesAusgefülltCheck();
+
+            if(darfTerminSerieGeöffnetWerden == true)
+            {
+                TerminSerie ts = new TerminSerie(termin);
+                ts.ShowDialog();
+                Close();
             }
         }
     }

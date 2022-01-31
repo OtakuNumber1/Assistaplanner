@@ -17,7 +17,7 @@
         <TextBox x:Name="TitelText" HorizontalAlignment="Left" Height="23" Margin="120,16,-221,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="101" />
         <ComboBox x:Name="KategoriePicker" HorizontalAlignment="Left" Margin="120,219,-221,0" VerticalAlignment="Top" Width="101"/>
         <TextBox x:Name="UntertitelText" HorizontalAlignment="Left" Height="23" Margin="120,46,-221,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="101"/>
-        <Button Content="Termin erstellen" HorizontalAlignment="Left" Margin="74,380,-175,0" VerticalAlignment="Top" Width="101" Click="Button_Click"/>
+        <Button Content="Termin erstellen" HorizontalAlignment="Left" Margin="8,380,-125,0" VerticalAlignment="Top" Width="117" Click="Button_Click"/>
         <TextBox x:Name="BeschreibungText" HorizontalAlignment="Left" Height="74" Margin="120,250,-252,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132"/>
         <Label Content="Wochentag:" HorizontalAlignment="Left" Margin="8,81,-108,0" VerticalAlignment="Top" Width="100"/>
         <ComboBox x:Name="wochentagBox" HorizontalAlignment="Left" Margin="120,81,-221,0" VerticalAlignment="Top" Width="101"/>
@@ -28,8 +28,7 @@
         <Label Content=":" HorizontalAlignment="Left" Margin="163,173,-175,0" VerticalAlignment="Top" Width="12"/>
         <TextBox x:Name="bisMinute" HorizontalAlignment="Left" Height="23" Margin="180,176,-221,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" PreviewTextInput="bisMinute_PreviewTextInput"/>
         <TextBlock x:Name="errorText" Foreground="Red" HorizontalAlignment="Left" Height="46" Margin="8,329,-252,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="244" FontWeight="Bold" FontStyle="Italic"/>
-        <Label Content="Als Terminserie anlegen:" HorizontalAlignment="Left" Margin="8,111,-145,0" VerticalAlignment="Top" Width="137"/>
-        <CheckBox Content="" HorizontalAlignment="Left" Margin="202,117,-221,0" VerticalAlignment="Top" Width="19" Height="20" Checked="TerminSerieIsChecked"/>
+        <Button Content="Als Terminserie erstellen" HorizontalAlignment="Left" Margin="130,380,-263,0" VerticalAlignment="Top" Width="133" Click="Button_Click_1"/>
 
     </Grid>
 </Window>
