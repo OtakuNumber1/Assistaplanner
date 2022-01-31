@@ -183,7 +183,6 @@ namespace Assistaplanner
             
             TerminSerie ts = new TerminSerie(termin);
             ts.ShowDialog();
-            Console.WriteLine(termin.ToString());
             
         }
 
