@@ -103,6 +103,9 @@
     <Compile Include="TerminListe.xaml.cs">
       <DependentUpon>TerminListe.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TerminSerie.xaml.cs">
+      <DependentUpon>TerminSerie.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TerminZeit.cs" />
     <Compile Include="TestClass.cs" />
     <Compile Include="TerminBearbeiten.xaml.cs">
@@ -142,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TerminBearbeiten.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TerminSerie.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
