@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -21,8 +20,10 @@ namespace Assistaplanner
     /// </summary>
     public partial class NeuerTermin : Window
     {
-        public NeuerTermin()
+        private int kw;
+        public NeuerTermin(int kw)
         {
+            this.kw = kw;
             List<string> wochentage = new List<string> { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
             InitializeComponent();
             List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
@@ -30,7 +31,6 @@ namespace Assistaplanner
             KategoriePicker.DisplayMemberPath = "KategorieName";
             KategoriePicker.SelectedValuePath = "terminKategorieID";
             wochentagBox.ItemsSource = wochentage;
-            
 
 
         }
@@ -43,22 +43,19 @@ namespace Assistaplanner
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             InsertIntoDB();
+            Close();
         }
         public void InsertIntoDB()
         {
             SQLiteConnection conn = Database.DatabaseConnection();
 
-            string insertTerminQuery = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
+            string insertTerminQuery = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`kalenderwoche`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @kalenderwoche, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
 
             SQLiteCommand command = new SQLiteCommand(insertTerminQuery, conn);
 
 
 
             Database.IsConnectionOpen(conn);
-            bool isError = false;
-
-
-            //Kategorie überprüfen
             if (KategoriePicker.SelectedValue != null)
             {
                 command.Parameters.AddWithValue("@terminKategorie", KategoriePicker.SelectedValue);
@@ -66,38 +63,17 @@ namespace Assistaplanner
             else
             {
                 errorText.Text = "Es wurde keine Kategorie ausgewählt";
-                isError = true;
-
-
             }
-
-            //Bis-Zeit überprüfen
-            if (bisStunde.Text.Length != 0 & bisMinute.Text.Length != 0)
+            if (TitelText.Text != null)
             {
-                command.Parameters.AddWithValue("@bisStunde", bisStunde.Text);
-                command.Parameters.AddWithValue("@bisMinute", bisMinute.Text);
+                command.Parameters.AddWithValue("@terminTitel", TitelText.Text);
             }
             else
             {
-                errorText.Text = "Geben Sie bitte eine Endzeit ein!";
-                isError = true;
-
+                errorText.Text = "Bitte geben Sie einen Titel ein!";
             }
-
-            //Von-Zeit überprüfen
-            if (vonStunde.Text.Length != 0 & vonMinute.Text.Length != 0)
-            {
-                command.Parameters.AddWithValue("@vonStunde", vonStunde.Text);
-                command.Parameters.AddWithValue("@vonMinute", vonMinute.Text);
-            }
-            else
-            {
-                errorText.Text = "Geben sie eine Startzeit ein!";
-                isError = true;
-
-            }
-
-            //Wochentag überprüfen
+            command.Parameters.AddWithValue("@kalenderwoche", kw);
+            command.Parameters.AddWithValue("@terminUntertitel", UntertitelText.Text);
             if (wochentagBox.SelectedItem != null)
             {
                 command.Parameters.AddWithValue("@wochentag", wochentagBox.SelectedItem);
@@ -105,36 +81,13 @@ namespace Assistaplanner
             else
             {
                 errorText.Text = "Geben Sie bitte einen Wochentag an";
-                isError = true;
-
             }
-
-            //Titel überprüfen
-            if (TitelText.Text.Length != 0)
-            {
-                command.Parameters.AddWithValue("@terminTitel", TitelText.Text);
-            }
-            else
-            {
-                errorText.Text = "Bitte geben Sie einen Titel ein!";
-                isError = true;
-
-            }
-
-            //Untertitel eintragen
-            command.Parameters.AddWithValue("@terminUntertitel", UntertitelText.Text);
-
-
-            //Beschreibung einfügen
+            command.Parameters.AddWithValue("@vonStunde", vonStunde.Text);
+            command.Parameters.AddWithValue("@vonMinute", vonMinute.Text);
+            command.Parameters.AddWithValue("@bisStunde", bisStunde.Text);
+            command.Parameters.AddWithValue("@bisMinute", bisMinute.Text);
             command.Parameters.AddWithValue("@beschreibung", BeschreibungText.Text);
-
-            //Nicht in DB schicken wenn Fehler vorliegt
-            if(isError == false)
-            {
-                var result = command.ExecuteNonQuery();
-                Close();
-            }
-           
+            var result = command.ExecuteNonQuery();
         }
 
        

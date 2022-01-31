@@ -27,6 +27,22 @@ namespace Assistaplanner
                 return output.ToList();
             }
         }
+        public static List<Termin> LoadTermineFromDayOfKalenderwoche(string Wochentag, int kw)
+        {
+            using (IDbConnection cnn = Database.DatabaseConnection())
+            {
+                var output = cnn.Query<Termin>("select * from termin where wochentag='" + Wochentag +  "' and kalenderwoche= '" + kw + "';", new DynamicParameters());
+                return output.ToList();
+            }
+        }
+        public static List<Termin> LoadTermineOfKalenderwoche(int kw)
+        {
+            using (IDbConnection cnn = Database.DatabaseConnection())
+            {
+                var output = cnn.Query<Termin>("select * from termin where kalenderwoche='" + kw + "';", new DynamicParameters());
+                return output.ToList();
+            }
+        }
         public static List<Termin> LoadTermine()
         {
             using(IDbConnection cnn = Database.DatabaseConnection())
