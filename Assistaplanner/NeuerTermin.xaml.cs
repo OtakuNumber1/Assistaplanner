@@ -222,9 +222,100 @@ namespace Assistaplanner
             }
         }
 
+        private Termin allesAusgefülltCheckFürTerminSerie()
+        {
+            Termin termin = new Termin();
+            bool isError = false;
+            if (KategoriePicker.SelectedValue != null)
+            {
+                termin.TerminKategorie = (int)KategoriePicker.SelectedValue;
+            }
+            else
+            {
+                isError = true;
+                errorText.Text = "Es wurde keine Kategorie ausgewählt";
+            }
+            if (TitelText.Text != null)
+            {
+                termin.TerminTitel = TitelText.Text;
+            }
+            else
+            {
+                isError = true;
+                errorText.Text = "Bitte geben Sie einen Titel ein!";
+            }
+
+            if (vonStunde.Text.Length != 0 && Convert.ToInt32(vonStunde.Text) <= 24 && Convert.ToInt32(vonStunde.Text) >= 0)
+            {
+                termin.vonStunde = Convert.ToInt32(vonStunde.Text);
+            }
+            else
+            {
+                isError = true;
+                errorText.Text = "Geben sie eine richtige Stunde ein: Von-Stunde";
+            }
+            if (vonMinute.Text.Length != 0 && Convert.ToInt32(vonMinute.Text) <= 60 && Convert.ToInt32(vonMinute.Text) >= 0)
+            {
+                if (vonMinute.Text == "00")
+                {
+                    termin.vonMinute = 0;
+                }
+                else
+                {
+                    termin.vonMinute = Convert.ToInt32(vonMinute.Text);
+                }
+
+            }
+            else
+            {
+                isError = true;
+                errorText.Text = "Geben sie eine richtige Minute ein: Von-Minute";
+            }
+            if (bisStunde.Text.Length != 0 && Convert.ToInt32(bisStunde.Text) <= 24 && Convert.ToInt32(bisStunde.Text) >= 0)
+            {
+                termin.bisStunde = Convert.ToInt32(bisStunde.Text);
+            }
+            else
+            {
+                isError = true;
+                errorText.Text = "Geben sie eine richtige Stunde ein: Bis-Stunde";
+            }
+            if (bisMinute.Text.Length != 0 && Convert.ToInt32(bisMinute.Text) <= 60 && Convert.ToInt32(bisMinute.Text) >= 0)
+            {
+                if (bisMinute.Text == "00")
+                {
+                    termin.bisMinute = 0;
+                }
+                else
+                {
+                    termin.bisMinute = Convert.ToInt32(bisMinute.Text);
+                }
+            }
+            else
+            {
+                isError = true;
+                errorText.Text = "Geben sie eine richtige Minute ein: Bis-Minute";
+            }
+            
+
+            termin.TerminUntertitel = UntertitelText.Text;
+            termin.Kalenderwoche = kw;
+            termin.beschreibung = BeschreibungText.Text;
+            if (isError == false)
+            {
+                this.darfTerminSerieGeöffnetWerden = true;
+                return termin;
+            }
+            else
+            {
+                this.darfTerminSerieGeöffnetWerden = false;
+                return null;
+            }
+        }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            Termin termin = allesAusgefülltCheck();
+            Termin termin = allesAusgefülltCheckFürTerminSerie();
 
             if(darfTerminSerieGeöffnetWerden == true)
             {
