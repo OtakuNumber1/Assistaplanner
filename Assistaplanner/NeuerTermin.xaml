@@ -9,25 +9,26 @@
         Title="NeuerTermin" Height="450" Width="277.378">
     <Grid Margin="0,0,472,0">
         <Label Content="Titel:" HorizontalAlignment="Left" Margin="8,12,-108,0" VerticalAlignment="Top" Width="100"/>
-        <Label Content="Kategorie:" HorizontalAlignment="Left" Margin="8,202,-108,0" VerticalAlignment="Top" Width="100"/>
-        <Label Content="Beschreibung:" HorizontalAlignment="Left" Margin="8,233,-108,0" VerticalAlignment="Top" Width="100"/>
-        <Label Content="Bis:" HorizontalAlignment="Left" Margin="8,156,-108,0" VerticalAlignment="Top" Width="100"/>
-        <Label Content="Von:" HorizontalAlignment="Left" Margin="8,125,-108,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Kategorie:" HorizontalAlignment="Left" Margin="8,219,-108,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Beschreibung:" HorizontalAlignment="Left" Margin="8,250,-108,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Bis:" HorizontalAlignment="Left" Margin="8,173,-108,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Von:" HorizontalAlignment="Left" Margin="8,142,-108,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="Untertitel:" HorizontalAlignment="Left" Margin="8,43,-108,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="TitelText" HorizontalAlignment="Left" Height="23" Margin="120,16,-221,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="101" TextChanged="TitelText_TextChanged"/>
-        <ComboBox x:Name="KategoriePicker" HorizontalAlignment="Left" Margin="120,202,-221,0" VerticalAlignment="Top" Width="101"/>
+        <TextBox x:Name="TitelText" HorizontalAlignment="Left" Height="23" Margin="120,16,-221,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="101" />
+        <ComboBox x:Name="KategoriePicker" HorizontalAlignment="Left" Margin="120,219,-221,0" VerticalAlignment="Top" Width="101"/>
         <TextBox x:Name="UntertitelText" HorizontalAlignment="Left" Height="23" Margin="120,46,-221,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="101"/>
-        <Button Content="Termin erstellen" HorizontalAlignment="Left" Margin="74,380,-175,0" VerticalAlignment="Top" Width="101" Click="Button_Click"/>
-        <TextBox x:Name="BeschreibungText" HorizontalAlignment="Left" Height="74" Margin="120,233,-252,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132"/>
-        <Label Content="Wochentag:" HorizontalAlignment="Left" Margin="8,92,-108,0" VerticalAlignment="Top" Width="100"/>
-        <ComboBox x:Name="wochentagBox" HorizontalAlignment="Left" Margin="120,92,-221,0" VerticalAlignment="Top" Width="101"/>
-        <TextBox x:Name="vonStunde" HorizontalAlignment="Left" Height="23" Margin="120,128,-158,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38"/>
-        <TextBox x:Name="vonMinute" HorizontalAlignment="Left" Height="23" Margin="180,128,-221,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41"/>
-        <Label Content=":" HorizontalAlignment="Left" Margin="163,130,-175,0" VerticalAlignment="Top" Width="12"/>
-        <TextBox x:Name="bisStunde" HorizontalAlignment="Left" Height="23" Margin="120,159,-158,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38"/>
-        <Label Content=":" HorizontalAlignment="Left" Margin="163,156,-175,0" VerticalAlignment="Top" Width="12"/>
-        <TextBox x:Name="bisMinute" HorizontalAlignment="Left" Height="23" Margin="180,159,-221,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41"/>
-        <TextBlock x:Name="errorText" Foreground="Red" HorizontalAlignment="Left" Height="46" Margin="8,312,-252,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="244" FontWeight="Bold" FontStyle="Italic"/>
+        <Button Content="Termin erstellen" HorizontalAlignment="Left" Margin="8,380,-125,0" VerticalAlignment="Top" Width="117" Click="Button_Click"/>
+        <TextBox x:Name="BeschreibungText" HorizontalAlignment="Left" Height="74" Margin="120,250,-252,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132"/>
+        <Label Content="Wochentag:" HorizontalAlignment="Left" Margin="8,81,-108,0" VerticalAlignment="Top" Width="100"/>
+        <ComboBox x:Name="wochentagBox" HorizontalAlignment="Left" Margin="120,81,-221,0" VerticalAlignment="Top" Width="101"/>
+        <TextBox x:Name="vonStunde" HorizontalAlignment="Left" Height="23" Margin="120,145,-158,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" PreviewTextInput="vonStunde_PreviewTextInput"/>
+        <TextBox x:Name="vonMinute" HorizontalAlignment="Left" Height="23" Margin="180,145,-221,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" PreviewTextInput="vonMinute_PreviewTextInput"/>
+        <Label Content=":" HorizontalAlignment="Left" Margin="163,147,-175,0" VerticalAlignment="Top" Width="12"/>
+        <TextBox x:Name="bisStunde" HorizontalAlignment="Left" Height="23" Margin="120,176,-158,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="38" PreviewTextInput="bisStunde_PreviewTextInput"/>
+        <Label Content=":" HorizontalAlignment="Left" Margin="163,173,-175,0" VerticalAlignment="Top" Width="12"/>
+        <TextBox x:Name="bisMinute" HorizontalAlignment="Left" Height="23" Margin="180,176,-221,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="41" PreviewTextInput="bisMinute_PreviewTextInput"/>
+        <TextBlock x:Name="errorText" Foreground="Red" HorizontalAlignment="Left" Height="46" Margin="8,329,-252,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="244" FontWeight="Bold" FontStyle="Italic"/>
+        <Button Content="Als Terminserie erstellen" HorizontalAlignment="Left" Margin="130,380,-263,0" VerticalAlignment="Top" Width="133" Click="Button_Click_1"/>
 
     </Grid>
 </Window>
