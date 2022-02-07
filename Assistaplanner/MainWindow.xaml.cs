@@ -54,6 +54,7 @@ namespace Assistaplanner
 
         private void neuerTerminButton_Click(object sender, RoutedEventArgs e)
         {
+
             NeuerTermin neuerTermin = new NeuerTermin(kw);
             neuerTermin.ShowDialog();
             RenderTermine();

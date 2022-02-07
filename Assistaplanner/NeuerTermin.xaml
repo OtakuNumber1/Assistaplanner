@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Assistaplanner"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="Assistaplanner.NeuerTermin"
         mc:Ignorable="d"
-        Title="NeuerTermin" Height="450" Width="277.378" FontFamily="Fonts/#Dosis" Background="WhiteSmoke" FontSize="16">
+        Title="NeuerTermin" Height="450" Width="277.378" WindowStyle="SingleBorderWindow" FontFamily="Fonts/#Dosis" Background="WhiteSmoke" FontSize="16">
     <Grid Margin="0,0,472,0">
         <Label Content="Titel:" HorizontalAlignment="Left" Margin="8,12,-108,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="Kategorie:" HorizontalAlignment="Left" Margin="8,183,-108,0" VerticalAlignment="Top" Width="100"/>
