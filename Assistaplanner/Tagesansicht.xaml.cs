@@ -1,5 +1,8 @@
-﻿using System;
+﻿using iTextSharp.text;
+
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +14,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
+
+
+using iTextSharp.text.pdf;
+using Aspose.Pdf;
+using System.Drawing;
+using Microsoft.Win32;
 
 namespace Assistaplanner
 {
@@ -24,7 +34,7 @@ namespace Assistaplanner
         public Tagesansicht(string Wochentag, int kw)
         {
             InitializeComponent();
-            int einträge;
+            
 
             this.Wochentag = Wochentag;
             this.kw = kw;
@@ -50,7 +60,7 @@ namespace Assistaplanner
 
 
                     Console.WriteLine("Label");
-                    Point point = label.TransformToAncestor(tagkalender).Transform(new Point(0, 0));
+                    System.Windows.Point point = label.TransformToAncestor(tagkalender).Transform(new System.Windows.Point(0, 0));
                     double startY = tagkalender.ActualHeight / 26.0 * 2;
                     double totalHeight = tagkalender.ActualHeight * 24.0 / 26;
                     int startMinute = termin.vonMinute + 60 * termin.vonStunde;
@@ -69,7 +79,7 @@ namespace Assistaplanner
                     Console.WriteLine("Werte:" + button.Width + button.Height + button.Margin);
                     if (kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).Count() > 0)
                     {
-                        Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
+                        System.Windows.Media.Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
                         button.Background = new SolidColorBrush(color);
                         Console.WriteLine("3");
                     }
@@ -85,32 +95,32 @@ namespace Assistaplanner
                 }
             }
         }
-        private Color ButtonColour(string colourname)
+        private System.Windows.Media.Color ButtonColour(string colourname)
         {
             //{ "Blau", "Rot", "Lila", "Hellblau", "Hellgrün", "Gelb", "Grün" };
-            Color color = new Color();
+            System.Windows.Media.Color color = new System.Windows.Media.Color();
             switch (colourname)
             {
                 case "Blau":
-                    color = Color.FromRgb(0, 191, 255);
+                    color = System.Windows.Media.Color.FromRgb(0, 191, 255);
                     break;
                 case "Rot":
-                    color = Color.FromRgb(255, 0, 0);
+                    color = System.Windows.Media.Color.FromRgb(255, 0, 0);
                     break;
                 case "Lila":
-                    color = Color.FromRgb(191, 62, 255);
+                    color = System.Windows.Media.Color.FromRgb(191, 62, 255);
                     break;
                 case "Hellblau":
-                    color = Color.FromRgb(187, 255, 255);
+                    color = System.Windows.Media.Color.FromRgb(187, 255, 255);
                     break;
                 case "Hellgrün":
-                    color = Color.FromRgb(0, 255, 127);
+                    color = System.Windows.Media.Color.FromRgb(0, 255, 127);
                     break;
                 case "Gelb":
-                    color = Color.FromRgb(255, 255, 0);
+                    color = System.Windows.Media.Color.FromRgb(255, 255, 0);
                     break;
                 case "Grün":
-                    color = Color.FromRgb(154, 205, 50);
+                    color = System.Windows.Media.Color.FromRgb(154, 205, 50);
                     break;
             }
 
@@ -163,6 +173,70 @@ namespace Assistaplanner
 
         private void PDFButtonT_Click(object sender, RoutedEventArgs e)
         {
+           
+
+
+
+                    String filename = "day.png";
+
+ 
+
+                    int screenLeft = 20;
+
+                    int screenTop = 110;
+
+                    int screenWidth = 1800;
+
+                    int screenHeight = 910;
+
+
+
+                    Bitmap bitmap_Screen = new Bitmap(screenWidth, screenHeight);
+
+                    Graphics g = Graphics.FromImage(bitmap_Screen);
+
+
+                    g.CopyFromScreen(screenLeft, screenTop, 0, 0, bitmap_Screen.Size);
+
+            
+                    bitmap_Screen.Save(filename);
+
+
+
+                    Aspose.Pdf.Document pdfDocument = new Aspose.Pdf.Document("assis_woche.pdf");
+
+            // Set coordinates
+            int lowerLeftX = 20;
+            int lowerLeftY = 50;
+            int upperRightX = 820;
+            int upperRightY = 500;
+
+            Aspose.Pdf.Page page = pdfDocument.Pages[1];
+
+                    FileStream imageStream = new FileStream("day.png", FileMode.Open);
+
+                    page.Resources.Images.Add(imageStream);
+
+                    page.Contents.Add(new Aspose.Pdf.Operators.GSave());
+
+                    Aspose.Pdf.Rectangle rectangle = new Aspose.Pdf.Rectangle(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
+                    Aspose.Pdf.Matrix matrix = new Aspose.Pdf.Matrix(new double[] { rectangle.URX - rectangle.LLX, 0, 0, rectangle.URY - rectangle.LLY, rectangle.LLX, rectangle.LLY });
+
+                    page.Contents.Add(new Aspose.Pdf.Operators.ConcatenateMatrix(matrix));
+                    XImage ximage = page.Resources.Images[page.Resources.Images.Count];
+
+                   
+                    page.Contents.Add(new Aspose.Pdf.Operators.Do(ximage.Name));
+
+                    page.Contents.Add(new Aspose.Pdf.Operators.GRestore());
+
+            SaveFileDialog save = new SaveFileDialog();
+            save.Title = "PDF speichern";
+            save.Filter = "pdf files (*.pdf)|*.pdf";
+            save.ShowDialog();
+                    pdfDocument.Save(save.FileName);
+
+
 
         }
     }

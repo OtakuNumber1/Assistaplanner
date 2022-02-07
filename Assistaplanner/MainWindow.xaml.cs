@@ -1,6 +1,9 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +14,11 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Drawing;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Aspose.Pdf;
+using Microsoft.Win32;
 
 namespace Assistaplanner
 {
@@ -22,32 +27,35 @@ namespace Assistaplanner
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+        int kw;
         /*public MainWindow()
         {
             
         }*/
         public MainWindow()
         {
-           
+
             InitializeComponent();
-            for(int i=1; i < 53; i++)
+            kw = 1;
+            for (int i = 1; i < 53; i++)
             {
                 kalenderWochenPicker.Items.Add(i);
-               
+
             }
-         //  kalenderWochenPicker.SelectedItem =kw;
+
+            //  kalenderWochenPicker.SelectedItem =kw;
             if (kalenderWochenPicker.SelectedItem == null)
             {
                 kalenderWochenPicker.SelectedValue = +1;
             }
         }
 
-        
+
 
         private void neuerTerminButton_Click(object sender, RoutedEventArgs e)
         {
-            NeuerTermin neuerTermin = new NeuerTermin((int) kalenderWochenPicker.SelectedValue);
+
+            NeuerTermin neuerTermin = new NeuerTermin(kw);
             neuerTermin.ShowDialog();
             RenderTermine();
         }
@@ -61,11 +69,11 @@ namespace Assistaplanner
         private void TagesansichtButton_Click(object sender, RoutedEventArgs e)
         {
 
-            Tagesansicht tagesansicht = new Tagesansicht("Montag",(int) kalenderWochenPicker.SelectedValue);
+            Tagesansicht tagesansicht = new Tagesansicht("Montag", kw);
             tagesansicht.ShowDialog();
             RenderTermine();
         }
-     
+
 
         private void TermineButton_Click(object sender, RoutedEventArgs e)
         {
@@ -80,9 +88,10 @@ namespace Assistaplanner
 
             kalender.Children.Clear();
             kalender.Children.Add(kalenderGrid);
-  
-            List<Termin> termine = SQLiteDataAccess.LoadTermineOfKalenderwoche((int) kalenderWochenPicker.SelectedValue);
-            foreach (Termin termin in termine) {
+
+            List<Termin> termine = SQLiteDataAccess.LoadTermineOfKalenderwoche(kw);
+            foreach (Termin termin in termine)
+            {
                 Label label = null;
                 switch (termin.Wochentag)
                 {
@@ -111,7 +120,7 @@ namespace Assistaplanner
                 if (label != null)
                 {
                     Console.WriteLine("Label");
-                    Point point = label.TransformToAncestor(kalender).Transform(new Point(0, 0));
+                    System.Windows.Point point = label.TransformToAncestor(kalender).Transform(new System.Windows.Point(0, 0));
                     double startY = kalender.ActualHeight / 26.0 * 2;
                     double totalHeight = kalender.ActualHeight * 24.0 / 26;
                     int startMinute = termin.vonMinute + 60 * termin.vonStunde;
@@ -120,14 +129,14 @@ namespace Assistaplanner
                     Button button = new Button();
                     button.Width = kalender.ActualWidth * 250 / (125 + 250 * 7);
                     button.Height = Math.Max(0, bisMinuten - startMinute) / (24.0 * 60.0) * totalHeight;
-                    button.Margin = new Thickness(point.X, startY + startMinute/(24.0 * 60.0) * totalHeight, 0, 0);
+                    button.Margin = new Thickness(point.X, startY + startMinute / (24.0 * 60.0) * totalHeight, 0, 0);
                     button.Content = termin.TerminTitel;
                     List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
 
-        
+
                     if (kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).Count() > 0)
                     {
-                        Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
+                        System.Windows.Media.Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
                         button.Background = new SolidColorBrush(color);
                     }
                     button.Click += (sender, e) =>
@@ -142,39 +151,39 @@ namespace Assistaplanner
                 }
             }
         }
-        private Color ButtonColour(string colourname)
+        private System.Windows.Media.Color ButtonColour(string colourname)
         {
             //{ "Blau", "Rot", "Lila", "Hellblau", "Hellgrün", "Gelb", "Grün" };
-            Color color = new Color();
+            System.Windows.Media.Color color = new System.Windows.Media.Color();
             switch (colourname)
             {
                 case "Blau":
-                    color = Color.FromRgb(0, 191, 255);
+                    color = System.Windows.Media.Color.FromRgb(0, 191, 255);
                     break;
                 case "Rot":
-                    color = Color.FromRgb(255,0,0);
+                    color = System.Windows.Media.Color.FromRgb(255, 0, 0);
                     break;
                 case "Lila":
-                    color = Color.FromRgb(191, 62, 255);
+                    color = System.Windows.Media.Color.FromRgb(191, 62, 255);
                     break;
                 case "Hellblau":
-                    color = Color.FromRgb(187,255,255);
+                    color = System.Windows.Media.Color.FromRgb(187, 255, 255);
                     break;
                 case "Hellgrün":
-                    color = Color.FromRgb(0,255,127);
+                    color = System.Windows.Media.Color.FromRgb(0, 255, 127);
                     break;
                 case "Gelb":
-                    color = Color.FromRgb(255,255,0);
+                    color = System.Windows.Media.Color.FromRgb(255, 255, 0);
                     break;
                 case "Grün":
-                    color = Color.FromRgb(154,205,50);
+                    color = System.Windows.Media.Color.FromRgb(154, 205, 50);
                     break;
             }
 
 
             return color;
         }
-      
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -184,14 +193,14 @@ namespace Assistaplanner
 
         private void Montag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Montag", (int) kalenderWochenPicker.SelectedValue);
+            Tagesansicht tagesansicht = new Tagesansicht("Montag", kw);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
         }
         private void dienstag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Dienstag", (int)kalenderWochenPicker.SelectedValue);
+            Tagesansicht tagesansicht = new Tagesansicht("Dienstag",kw);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
@@ -199,7 +208,7 @@ namespace Assistaplanner
 
         private void Mittwoch_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Mittwoch", (int)kalenderWochenPicker.SelectedValue);
+            Tagesansicht tagesansicht = new Tagesansicht("Mittwoch", kw);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
@@ -207,7 +216,7 @@ namespace Assistaplanner
 
         private void Donnerstag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Donnerstag", (int)kalenderWochenPicker.SelectedValue);
+            Tagesansicht tagesansicht = new Tagesansicht("Donnerstag", kw);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
@@ -215,7 +224,7 @@ namespace Assistaplanner
 
         private void Freitag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Freitag", (int)kalenderWochenPicker.SelectedValue);
+            Tagesansicht tagesansicht = new Tagesansicht("Freitag", kw);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
@@ -223,7 +232,7 @@ namespace Assistaplanner
 
         private void Samstag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Samstag", (int)kalenderWochenPicker.SelectedValue);
+            Tagesansicht tagesansicht = new Tagesansicht("Samstag",kw);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
@@ -231,47 +240,111 @@ namespace Assistaplanner
 
         private void Sonntag_Clicked(object sender, MouseButtonEventArgs e)
         {
-            Tagesansicht tagesansicht = new Tagesansicht("Sonntag", (int)kalenderWochenPicker.SelectedValue);
+            Tagesansicht tagesansicht = new Tagesansicht("Sonntag", kw);
             this.Close();
             tagesansicht.ShowDialog();
             RenderTermine();
         }
 
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
 
         private void kalenderwocheChanged(object sender, SelectionChangedEventArgs e)
         {
             RenderTermine();
-           // kw = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
+            // kw = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
         }
 
         private void nächsteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (kalenderWochenPicker.SelectedItem != null)
+           if(kw != 52)
             {
-                if ((int)kalenderWochenPicker.SelectedValue != 52)
-                    kalenderWochenPicker.SelectedValue = ((int)kalenderWochenPicker.SelectedValue) + 1;
-               // kw = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
+                kw += 1;
+                RenderTermine();
             }
         }
-        
-    
+
+
 
         private void vorherigeButton_Click(object sender, RoutedEventArgs e)
         {
 
 
 
-            if (kalenderWochenPicker.SelectedItem != null)
+            if (kw != 1)
             {
-                if ((int)kalenderWochenPicker.SelectedValue != 1)
+                kw -= 1;
+                RenderTermine();
+            }
+        
+        }
+
+        private void PDFButtonT_Click(object sender, RoutedEventArgs e)
+        {
+            {
+                
+
+                String filename = "week.png";
+
+
+                int screenLeft = 20;
+
+                int screenTop = 210;
+
+                int screenWidth = 1800;
+
+                int screenHeight = 810;
+
+           
+
+                Bitmap bitmap_Screen = new Bitmap(screenWidth, screenHeight);
+
+                Graphics g = Graphics.FromImage(bitmap_Screen);
+
+
+
+                g.CopyFromScreen(screenLeft, screenTop, 0, 0, bitmap_Screen.Size);
+
+              
+           
+
+                Aspose.Pdf.Document pdfDocument = new Aspose.Pdf.Document("assis_woche.pdf");
+
+                // Set coordinates
+                int lowerLeftX = 20;
+                int lowerLeftY = 80;
+                int upperRightX = 820;
+                int upperRightY = 450;
+
+                Aspose.Pdf.Page page = pdfDocument.Pages[1];
+
+                FileStream imageStream = new FileStream("week.png", FileMode.Open);
+
+                page.Resources.Images.Add(imageStream);
+
+                page.Contents.Add(new Aspose.Pdf.Operators.GSave());
+
+                Aspose.Pdf.Rectangle rectangle = new Aspose.Pdf.Rectangle(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
+                Aspose.Pdf.Matrix matrix = new Aspose.Pdf.Matrix(new double[] { rectangle.URX - rectangle.LLX, 0, 0, rectangle.URY - rectangle.LLY, rectangle.LLX, rectangle.LLY });
+
+                page.Contents.Add(new Aspose.Pdf.Operators.ConcatenateMatrix(matrix));
+                XImage ximage = page.Resources.Images[page.Resources.Images.Count];
+
+            
+                page.Contents.Add(new Aspose.Pdf.Operators.Do(ximage.Name));
+
+               
+                page.Contents.Add(new Aspose.Pdf.Operators.GRestore());
+
+                SaveFileDialog save = new SaveFileDialog();
+               
+                save.Title = "PDF speichern";
+                save.Filter = "pdf files (*.pdf)|*.pdf";
+                Nullable<bool> result = save.ShowDialog();
+                if (result == true)
                 {
-                    kalenderWochenPicker.SelectedValue = ((int)kalenderWochenPicker.SelectedValue) - 1;
-                   //  kw = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
+                    pdfDocument.Save(save.FileName);
                 }
+                imageStream.Close();
+                
             }
         }
     }

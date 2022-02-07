@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assistaplanner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920" Loaded="Window_Loaded" WindowState="Maximized" WindowStyle="None">
+        Title="AssistaPlanner" Height="1080" Width="1920" Loaded="Window_Loaded" WindowState="Maximized" WindowStyle="SingleBorderWindow" Background="WhiteSmoke" FontFamily="Fonts/#Dosis">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="326*"/>
@@ -16,10 +16,78 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button x:Name="neuerTerminButton" Content="Neuer Termin" HorizontalAlignment="Left" Margin="47,30,0,0" VerticalAlignment="Top" Width="270" Click="neuerTerminButton_Click" Height="76" FontSize="36"/>
-        <Button Content="Kategorien" HorizontalAlignment="Left" Margin="353,30,0,0" VerticalAlignment="Top" Width="270" Click="Button_Click" Height="76" FontSize="36"/>
-        <Button x:Name="TermineButton" Content="Terminliste" HorizontalAlignment="Left" Margin="139,30,0,0" VerticalAlignment="Top" Width="270" Height="76" Click="TermineButton_Click" FontSize="36" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Right" Margin="0,30,30,0" VerticalAlignment="Top" Width="270" Click="ExitButton_Click" Height="76" FontSize="36" Grid.Column="2"/>
+
+        <Grid Margin="0,-9,0,9">
+            <Grid.ColumnSpan>3</Grid.ColumnSpan>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Margin="62,38,55,10" Background="WhiteSmoke" BorderThickness="0" Click="neuerTerminButton_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="Images/bearbeiten.png" Width="100" Grid.Column="0" VerticalAlignment="Center" RenderTransformOrigin="-0.045,0.535" Margin="-72,0,72,0"/>
+                    <Label Content="Neuer Termin" Margin="51,27,-51,10" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Heavy" Height="61"/>
+                </Grid>
+            </Button>
+            <Button Margin="62,38,55,10" Grid.Column="1" Background="WhiteSmoke" BorderThickness="0" Click="Button_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="Images/category.png" Width="100" Grid.Column="0" VerticalAlignment="Center" RenderTransformOrigin="-0.045,0.535" Margin="-72,0,72,0"/>
+                    <Label Content="Kategorien" Margin="51,27,-51,10" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Heavy" Height="61"/>
+                </Grid>
+            </Button>
+            <Button Margin="62,38,55,10" Grid.Column="3" Background="WhiteSmoke" BorderThickness="0" Click="TermineButton_Click" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="Images/liste.png" Width="100" Grid.Column="0" VerticalAlignment="Center" RenderTransformOrigin="-0.045,0.535" Margin="-72,0,72,0"/>
+                    <Label Content="Terminliste" Margin="51,27,-51,10" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Heavy" Height="61"/>
+                </Grid>
+            </Button>
+            <Grid Margin="20,38,20,10" Grid.Column="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Background="WhiteSmoke" Width="75" Height="75" BorderThickness="0"  Click="vorherigeButton_Click" >
+                        <Image Source="Images/linker-pfeil.png" Width="75" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <Label Content="KW" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center" FontSize="36" FontWeight="Heavy" Height="69" Margin="27,23,27,10"/>
+
+                    <Button Grid.Column="2" Background="WhiteSmoke" Width="75" Height="75" BorderThickness="0" Click="nächsteButton_Click" >
+                        <Image Source="Images/rechter-pfeil.png" Width="75" VerticalAlignment="Center" RenderTransformOrigin="-0.045,0.535"/>
+                    </Button>
+
+                </Grid>
+            </Grid>
+            <Button Margin="62,38,55,10" Grid.Column="4" Background="WhiteSmoke" BorderThickness="0"  Click="PDFButtonT_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="Images/export.png" Width="100" Grid.Column="0" VerticalAlignment="Center" RenderTransformOrigin="-0.045,0.535" Margin="-72,0,72,0"/>
+                    <Label Content="Exportieren" Margin="51,27,-51,10" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Heavy" Height="61"/>
+                </Grid>
+            </Button>
+        </Grid>
+
 
         <Canvas x:Name="kalender" Height="800" Width="1800" Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="0" Margin="56,59,56,60">
             <Grid x:Name="kalenderGrid" Height="800" Width="1800" ShowGridLines="True" Canvas.Left="10">
@@ -94,10 +162,8 @@
 
             </Grid>
         </Canvas>
-        <Label x:Name="kwLabel" Content="KW:" HorizontalAlignment="Left" Height="66" Margin="139,141,0,0" VerticalAlignment="Top" Width="100" Grid.RowSpan="2" Grid.Column="1" FontSize="48"/>
-        <ComboBox x:Name="kalenderWochenPicker" Grid.Column="1" HorizontalAlignment="Left" Margin="264,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="145" Height="54" Grid.ColumnSpan="2" SelectionChanged="kalenderwocheChanged" FontSize="36"/>
-        <Button x:Name="vorherigeWocheButton" Content="Vorherige W." HorizontalAlignment="Left" Margin="494,134,0,0" VerticalAlignment="Top" Width="270" Click="vorherigeButton_Click" Height="76" FontSize="36" RenderTransformOrigin="2.837,1.322" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-        <Button x:Name="nächsteWocheButton" Content="Nächste W." HorizontalAlignment="Left" Margin="63.8,134,0,0" VerticalAlignment="Top" Width="270" Click="nächsteButton_Click" Height="76" FontSize="36" RenderTransformOrigin="2.837,1.322" Grid.RowSpan="2" Grid.Column="2"/>
+        <Label x:Name="kwLabel" Content="KW:" HorizontalAlignment="Left" Height="66" Margin="1067,99,-301,0" VerticalAlignment="Top" Width="100" Grid.RowSpan="2" Grid.Column="2" FontSize="48"/>
+        <ComboBox x:Name="kalenderWochenPicker" Grid.Column="2" HorizontalAlignment="Left" Margin="1192,111,-471,0" VerticalAlignment="Top" Width="145" Height="54" SelectionChanged="kalenderwocheChanged" FontSize="36" Grid.RowSpan="2"/>
     </Grid>
 
 </Window>
