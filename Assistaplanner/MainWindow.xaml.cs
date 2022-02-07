@@ -261,6 +261,7 @@ namespace Assistaplanner
             {
                 if ((int)kalenderWochenPicker.SelectedValue != 52)
                     kalenderWochenPicker.SelectedValue = ((int)kalenderWochenPicker.SelectedValue) + 1;
+                    RenderTermine();
                 // kw = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
             }
         }
@@ -277,6 +278,7 @@ namespace Assistaplanner
                 if ((int)kalenderWochenPicker.SelectedValue != 1)
                 {
                     kalenderWochenPicker.SelectedValue = ((int)kalenderWochenPicker.SelectedValue) - 1;
+                    RenderTermine();
                     //  kw = Int32.Parse(this.kalenderWochenPicker.SelectedItem.ToString());
                 }
             }
