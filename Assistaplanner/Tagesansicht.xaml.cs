@@ -161,11 +161,6 @@ namespace Assistaplanner
             mainWindow.ShowDialog();
         }
 
-        private void ExitButtonT_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             RenderTermine(Wochentag);

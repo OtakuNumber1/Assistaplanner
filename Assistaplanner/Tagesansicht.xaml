@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assistaplanner"
         mc:Ignorable="d"
-        Title="Tagesansicht" Height="1080" Width="1920" WindowState="Maximized" WindowStyle="None">
+        Title="Tagesansicht" Height="1080" Width="1920" WindowState="Maximized" WindowStyle="SingleBorderWindow">
     <Grid Loaded="Grid_Loaded">
 
         <Grid.ColumnDefinitions>
@@ -16,11 +16,70 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Content="Wochenansicht" HorizontalAlignment="Left" Margin="684,30,0,0" VerticalAlignment="Top" Width="270" Height="71" FontSize="36" Grid.Column="1" Click="Wochenansicht_Button_Click"/>
-        <Button x:Name="neuerTerminTagesansicht" Content="Neuer Termin" HorizontalAlignment="Left" Margin="49,30,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="neuerTerminTagesansicht_Click"/>
-        <Button x:Name="kategorienlisteTagesansicht" Content="Kategorien" HorizontalAlignment="Left" Margin="336,30,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="kategorienlisteTagesansicht_Click"/>
-        <Button x:Name="terminListeTagesansicht" Content="Terminliste" HorizontalAlignment="Left" Margin="304,30,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="terminListeTagesansicht_Click"/>
-        <Button x:Name="ExitButtonT" Content="Exit" HorizontalAlignment="Left" Margin="985.2,30,30,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Grid.Column="1" Click="ExitButtonT_Click"/>
+        <Grid Margin="0,-9,0,9">
+            <Grid.ColumnSpan>3</Grid.ColumnSpan>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Margin="62,38,55,10" Background="WhiteSmoke" BorderThickness="0" Click="neuerTerminTagesansicht_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="Images/bearbeiten.png" Width="100" Grid.Column="0" VerticalAlignment="Center" RenderTransformOrigin="-0.045,0.535" Margin="-72,0,72,0"/>
+                    <Label Content="Neuer Termin" Margin="51,27,-51,10" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Heavy" Height="61"/>
+                </Grid>
+            </Button>
+            <Button Margin="62,38,55,10" Grid.Column="1" Background="WhiteSmoke" BorderThickness="0" Click="kategorienlisteTagesansicht_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="Images/category.png" Width="100" Grid.Column="0" VerticalAlignment="Center" RenderTransformOrigin="-0.045,0.535" Margin="-72,0,72,0"/>
+                    <Label Content="Kategorien" Margin="51,27,-51,10" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Heavy" Height="61"/>
+                </Grid>
+            </Button>
+            <Button Margin="62,38,55,10" Grid.Column="3" Background="WhiteSmoke" BorderThickness="0" Click="terminListeTagesansicht_Click" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="Images/liste.png" Width="100" Grid.Column="0" VerticalAlignment="Center" RenderTransformOrigin="-0.045,0.535" Margin="-72,0,72,0"/>
+                    <Label Content="Terminliste" Margin="51,27,-51,10" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Heavy" Height="61"/>
+                </Grid>
+            </Button>
+            <Grid Margin="20,38,20,10" Grid.Column="2">
+                <Button Grid.Column="3" Background="WhiteSmoke" BorderThickness="0" Click="Wochenansicht_Button_Click" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="Images/zuruck.png" Width="100" Grid.Column="0" VerticalAlignment="Top" RenderTransformOrigin="-0.045,0.535" Margin="-46,0,136,0" Height="90"/>
+                        <Label Content="Wochenansicht" Margin="59,19.349,-59,10" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Heavy" Height="61" Grid.Row="1"/>
+                    </Grid>
+                </Button>
+            </Grid>
+            <Button Margin="62,38,55,10" Grid.Column="4" Background="WhiteSmoke" BorderThickness="0"  Click="PDFButtonT_Click">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="Images/export.png" Width="100" Grid.Column="0" VerticalAlignment="Center" RenderTransformOrigin="-0.045,0.535" Margin="-72,0,72,0"/>
+                    <Label Content="Exportieren" Margin="51,27,-51,10" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Heavy" Height="61"/>
+                </Grid>
+            </Button>
+        </Grid>
+
 
 
         <Canvas x:Name="tagkalender" Height="800" Width="1800" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0">
@@ -91,8 +150,8 @@
 
             </Grid>
         </Canvas>
-        <TextBlock x:Name="wochentagText" Grid.Column="1" HorizontalAlignment="Left" Margin="204,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="80" Width="318" FontSize="48" Grid.RowSpan="2"/>
-        <Button x:Name="PDF_Button" Content="PDF Export" HorizontalAlignment="Left" Margin="622,30,0,0" VerticalAlignment="Top" Width="246" Height="71" FontSize="36" Click="PDFButtonT_Click" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="wochentagText" HorizontalAlignment="Center" Margin="208,141,712,828" TextWrapping="Wrap" VerticalAlignment="Center" Height="80" Width="340" FontSize="48" Grid.Column="1" Grid.RowSpan="2"/>
+
 
 
 
