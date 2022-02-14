@@ -19,7 +19,8 @@
     </Window.Resources>
 
 
-    <Grid>
+    
+    <Grid AllowDrop="True" Drop="kalenderGrid_Drop" Background="WhiteSmoke" DragOver="Grid_DragOver" Name="KalenderGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="326*"/>
             <ColumnDefinition Width="197*"/>
@@ -102,8 +103,8 @@
         </Grid>
 
 
-        <Canvas x:Name="kalender" Height="800" Width="1800" Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="0" Margin="56,59,56,60">
-            <Grid x:Name="kalenderGrid" Height="800" Width="1800" ShowGridLines="True" Canvas.Left="10">
+        <Canvas x:Name="kalender" Height="800" Width="1800" Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="0" Margin="56,59,56,60"  AllowDrop="True" Drop="kalenderGrid_Drop">
+            <Grid x:Name="kalenderGrid" Height="800" Width="1800" ShowGridLines="True" Canvas.Left="10" AllowDrop="True">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="1*"/>
