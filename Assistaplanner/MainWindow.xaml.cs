@@ -142,30 +142,18 @@ namespace Assistaplanner
                         System.Windows.Media.Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
                         button.Background = new SolidColorBrush(color);
                     }
-
-
-
-                    button.Click += (sender, e) =>
-                    {
-                        TerminBearbeiten terminBearbeiten = new TerminBearbeiten(termin);
-                        terminBearbeiten.ShowDialog();
-                        RenderTermine();
-                    };
                     button.MouseRightButtonDown += (sender, e) =>
                     {
+                       
                         ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
                         cm.PlacementTarget = sender as Button;
+                        foreach(MenuItem m in cm.Items)
+                        {
+                            m.DataContext = sender;
+                        }
                         cm.IsOpen = true;
-                   // button.Click += (sender, e) =>
-                    //{
-                      //  TerminBearbeiten terminBearbeiten = new TerminBearbeiten(termin);
-                        //terminBearbeiten.ShowDialog();
-                        //RenderTermine();
-                    //};
 
-                        
-
-                        
+                                             
                     };
                     kalender.Children.Add(button);
                     Panel.SetZIndex(button, 0);
@@ -388,46 +376,34 @@ namespace Assistaplanner
             }
         }
 
-        private static Label FindClickedItem(object sender)
-        {
-            var mi = sender as MenuItem;
-            if (mi == null)
-            {
-                return null;
-            }
-
-            var cm = mi.CommandParameter as ContextMenu;
-            if (cm == null)
-            {
-                return null;
-            }
-
-            return cm.PlacementTarget as Label;
-        }
+        
         private void Edit_OnClick(object sender, RoutedEventArgs e)
         {
-            var clickedItem = FindClickedItem(sender);
-            /*
-            TerminBearbeiten terminBearbeiten = new TerminBearbeiten(termin);
-            terminBearbeiten.ShowDialog();
-            RenderTermine(); */
+            MenuItem cm = sender as MenuItem;
+            Button clickedButton = cm.DataContext as Button;
+            Termin clickedTermin = clickedButton.DataContext as Termin;
+            Console.WriteLine(clickedTermin.TerminID);
+            TerminBearbeiten tb = new TerminBearbeiten(clickedTermin);
+            tb.ShowDialog();
+            RenderTermine();
         }
         private void Delete_OnClick(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("test");
 
-            /*Termin selectedTermin = FindClickedItem(sender);
-            if (selectedTermin != null)
-            {
-                int idOfTermin = selectedTermin.TerminID;
-                using (IDbConnection cnn = Database.DatabaseConnection())
-                {
-                    cnn.Query<Termin>("delete from termin where terminID=" + idOfTermin, new DynamicParameters());
-                    RenderTermine();
-                }
-            }
-            */
+            MenuItem cm = sender as MenuItem;
+            Button clickedButton = cm.DataContext as Button;
+            Termin clickedTermin = clickedButton.DataContext as Termin;
 
+            SQLiteConnection conn = Database.DatabaseConnection();
+
+            string deleteQuery = "DELETE FROM termin WHERE terminID=@id";
+            SQLiteCommand command = new SQLiteCommand(deleteQuery, conn);
+
+            Database.IsConnectionOpen(conn);
+            command.Parameters.AddWithValue("@id", clickedTermin.TerminID);
+            var result = command.ExecuteNonQuery();
+            RenderTermine();
+            
         }
 
         private void kalenderGrid_Drop(object sender, DragEventArgs e)
