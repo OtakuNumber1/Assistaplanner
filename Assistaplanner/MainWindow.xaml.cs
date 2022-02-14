@@ -333,7 +333,8 @@ namespace Assistaplanner
                 int upperRightY = 450;
 
                 Aspose.Pdf.Page page = pdfDocument.Pages[1];
-
+                
+                
                 FileStream imageStream = new FileStream("week.png", FileMode.Open);
 
                 page.Resources.Images.Add(imageStream);
@@ -352,6 +353,7 @@ namespace Assistaplanner
                
                 page.Contents.Add(new Aspose.Pdf.Operators.GRestore());
 
+                
                 SaveFileDialog save = new SaveFileDialog();
                
                 save.Title = "PDF speichern";
