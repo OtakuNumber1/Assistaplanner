@@ -6,6 +6,19 @@
         xmlns:local="clr-namespace:Assistaplanner"
         mc:Ignorable="d"
         Title="AssistaPlanner" Height="1080" Width="1920" Loaded="Window_Loaded" WindowState="Maximized" WindowStyle="SingleBorderWindow" Background="WhiteSmoke" FontFamily="Fonts/#Dosis">
+    <Window.Resources>
+        <ContextMenu x:Key="cmButton">
+           
+            <MenuItem Header="Edit"
+                      Click="Edit_OnClick"
+                      CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+            <MenuItem Header="Delete"
+                      Click="Delete_OnClick"
+                      CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+        </ContextMenu>
+    </Window.Resources>
+
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="326*"/>
@@ -164,6 +177,10 @@
         </Canvas>
         <Label x:Name="kwLabel" Content="KW:" HorizontalAlignment="Left" Height="66" Margin="1067,99,-301,0" VerticalAlignment="Top" Width="100" Grid.RowSpan="2" Grid.Column="2" FontSize="48"/>
         <ComboBox x:Name="kalenderWochenPicker" Grid.Column="2" HorizontalAlignment="Left" Margin="1192,111,-471,0" VerticalAlignment="Top" Width="145" Height="54" SelectionChanged="kalenderwocheChanged" FontSize="36" Grid.RowSpan="2"/>
+
+
+
+
     </Grid>
 
 </Window>

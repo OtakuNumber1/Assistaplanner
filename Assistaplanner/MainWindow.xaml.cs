@@ -19,6 +19,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Aspose.Pdf;
 using Microsoft.Win32;
+using System.Data;
+using Dapper;
 
 namespace Assistaplanner
 {
@@ -139,13 +141,25 @@ namespace Assistaplanner
                         System.Windows.Media.Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
                         button.Background = new SolidColorBrush(color);
                     }
+
+
+
                     button.Click += (sender, e) =>
                     {
                         TerminBearbeiten terminBearbeiten = new TerminBearbeiten(termin);
                         terminBearbeiten.ShowDialog();
                         RenderTermine();
                     };
+                    button.MouseRightButtonDown += (sender, e) =>
+                    {
+                        ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
+                        cm.PlacementTarget = sender as Button;
+                        cm.IsOpen = true;
 
+                        
+
+                        
+                    };
                     kalender.Children.Add(button);
                     Panel.SetZIndex(button, 0);
                 }
@@ -348,6 +362,48 @@ namespace Assistaplanner
                 imageStream.Close();
                 
             }
+        }
+
+        private static Label FindClickedItem(object sender)
+        {
+            var mi = sender as MenuItem;
+            if (mi == null)
+            {
+                return null;
+            }
+
+            var cm = mi.CommandParameter as ContextMenu;
+            if (cm == null)
+            {
+                return null;
+            }
+
+            return cm.PlacementTarget as Label;
+        }
+        private void Edit_OnClick(object sender, RoutedEventArgs e)
+        {
+            var clickedItem = FindClickedItem(sender);
+            /*
+            TerminBearbeiten terminBearbeiten = new TerminBearbeiten(termin);
+            terminBearbeiten.ShowDialog();
+            RenderTermine(); */
+        }
+        private void Delete_OnClick(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("test");
+
+            /*Termin selectedTermin = FindClickedItem(sender);
+            if (selectedTermin != null)
+            {
+                int idOfTermin = selectedTermin.TerminID;
+                using (IDbConnection cnn = Database.DatabaseConnection())
+                {
+                    cnn.Query<Termin>("delete from termin where terminID=" + idOfTermin, new DynamicParameters());
+                    RenderTermine();
+                }
+            }
+            */
+
         }
     }
 }
