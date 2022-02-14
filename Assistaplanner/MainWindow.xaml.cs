@@ -388,26 +388,18 @@ namespace Assistaplanner
             Console.WriteLine("Prozent Änderung" + prozentÄnderung);
             int differenzMinute = Convert.ToInt32(24 * 60 * prozentÄnderung);
             Console.WriteLine(differenzMinute);
-
-            int stundenÄnderung = differenzMinute / 60;
-            int minutenÄnderung = differenzMinute % 60;
-
-            Console.WriteLine("Termin ändert sich um Stunde: " + stundenÄnderung + " Minute: " + minutenÄnderung);
-
-            int neuVonMinute = dragedTermin.vonMinute + minutenÄnderung;
-            int neuVonStunde = dragedTermin.vonStunde + stundenÄnderung;
-            int neuBisMinute = dragedTermin.bisMinute + minutenÄnderung;
-            int neuBisStunde = dragedTermin.bisStunde + stundenÄnderung;
-
+            
+            int neuVonMinute = dragedTermin.vonStunde * 60 + dragedTermin.vonMinute + differenzMinute;
+            int neuBisMinute = dragedTermin.bisStunde * 60 + dragedTermin.bisMinute + differenzMinute;
             SQLiteConnection conn = Database.DatabaseConnection();
                 string insertTerminQuery = "UPDATE termin SET `vonStunde`=@vonStunde, `vonMinute`=@vonMinute,`bisStunde`=@bisStunde,`bisMinute`=@bisMinute WHERE terminID=@id";
                 Database.IsConnectionOpen(conn);
                 SQLiteCommand command = new SQLiteCommand(insertTerminQuery, conn);
                 command.Parameters.AddWithValue("@id", dragedTermin.TerminID);
-                command.Parameters.AddWithValue("@vonStunde", neuVonStunde);
-                command.Parameters.AddWithValue("@vonMinute", neuVonMinute);
-                command.Parameters.AddWithValue("@bisStunde", neuBisStunde);
-                command.Parameters.AddWithValue("@bisMinute", neuBisMinute);
+                command.Parameters.AddWithValue("@vonStunde", neuVonMinute / 60);
+                command.Parameters.AddWithValue("@vonMinute", neuVonMinute % 60);
+                command.Parameters.AddWithValue("@bisStunde", neuBisMinute / 60);
+                command.Parameters.AddWithValue("@bisMinute", neuBisMinute % 60);
                 var result = command.ExecuteNonQuery();
             RenderTermine();
 
@@ -449,7 +441,7 @@ namespace Assistaplanner
         private void Grid_DragOver(object sender, DragEventArgs e)
         {
             //Termin aus Daten holen
-            Termin dragedTermin = e.Data.GetData("Termin") as Termin;
+            /*Termin dragedTermin = e.Data.GetData("Termin") as Termin;
             Button origButton = e.Data.GetData("Button") as Button;
             System.Windows.Point positionOriginalButton = (System.Windows.Point)e.Data.GetData("PointButton");
             //Punkt des Buttons holen
@@ -492,7 +484,7 @@ namespace Assistaplanner
             command.Parameters.AddWithValue("@bisStunde", neuBisStunde);
             command.Parameters.AddWithValue("@bisMinute", neuBisMinute);
             var result = command.ExecuteNonQuery();
-            RenderTermine();
+            RenderTermine();*/
         }
     }
 }
