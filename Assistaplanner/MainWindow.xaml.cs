@@ -1,26 +1,18 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Drawing;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Aspose.Pdf;
 using Microsoft.Win32;
 using System.Data;
-using Dapper;
+using System.Windows.Threading;
+using System.Windows.Controls.Primitives;
 
 namespace Assistaplanner
 {
@@ -31,6 +23,8 @@ namespace Assistaplanner
     {
         int kw;
         DataObject dao;
+        DispatcherTimer dt;
+        Button lastButtonOn;
         /*public MainWindow()
         {
             
@@ -39,6 +33,9 @@ namespace Assistaplanner
         {
 
             InitializeComponent();
+            dt = new DispatcherTimer();
+            dt.Interval = new TimeSpan(0, 0, 1);// eine Sekunde warten
+            dt.Tick += new EventHandler(dt_Tick);
             kw = 1;
             for (int i = 1; i < 53; i++)
             {
@@ -53,7 +50,12 @@ namespace Assistaplanner
             }
         }
 
-
+        private void dt_Tick(object sender, EventArgs e)
+        {
+            Termin t = lastButtonOn.DataContext as Termin;
+            //Fenster aufmachen
+            
+        }
 
         private void neuerTerminButton_Click(object sender, RoutedEventArgs e)
         {
@@ -134,7 +136,8 @@ namespace Assistaplanner
                     button.Height = Math.Max(0, bisMinuten - startMinute) / (24.0 * 60.0) * totalHeight;
                     button.Margin = new Thickness(point.X, startY + startMinute / (24.0 * 60.0) * totalHeight, 0, 0);
                     button.Content = termin.TerminTitel;
-                    
+                    button.MouseEnter += new MouseEventHandler(EnterButton);
+                    button.MouseLeave += new MouseEventHandler(LeaveButton);
                     button.MouseMove += new MouseEventHandler(Start_Drag);
                     List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
                     if (kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).Count() > 0)
@@ -160,6 +163,20 @@ namespace Assistaplanner
                 }
             }
         }
+
+        private void LeaveButton(object sender, MouseEventArgs e)
+        {
+            
+            dt.Stop();
+        }
+
+        private void EnterButton(object sender, MouseEventArgs e)
+        {
+            lastButtonOn = sender as Button;
+            dt.Start();
+
+        }
+
 
         private void Start_Drag(object sender, MouseEventArgs e)
         {
