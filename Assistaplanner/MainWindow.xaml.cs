@@ -34,7 +34,7 @@ namespace Assistaplanner
 
             InitializeComponent();
             dt = new DispatcherTimer();
-            dt.Interval = new TimeSpan(0, 0, 1);// eine Sekunde warten
+            dt.Interval = new TimeSpan(0, 0, 2);// zwei Sekunden warten
             dt.Tick += new EventHandler(dt_Tick);
             kw = 1;
             for (int i = 1; i < 53; i++)
@@ -173,8 +173,14 @@ namespace Assistaplanner
         private void EnterButton(object sender, MouseEventArgs e)
         {
             lastButtonOn = sender as Button;
+            Termin t = lastButtonOn.DataContext as Termin;
             dt.Start();
-
+            Console.WriteLine("Länger wie 2 Sekunden auf Button mit TerminID " + t.TerminID);
+            String content = "Titel: " + t.TerminTitel + " @ " + "Von: " + t.vonStunde +":"+ t.vonMinute + " @ " + "Bis: " + t.bisStunde + ":" + t.bisMinute;
+            content = content.Replace("@", System.Environment.NewLine);
+            ToolTip t1 = new ToolTip();
+            t1.Content = content;
+            lastButtonOn.ToolTip = t1;
         }
 
 
@@ -448,7 +454,9 @@ namespace Assistaplanner
             
             int neuVonMinute = dragedTermin.vonStunde * 60 + dragedTermin.vonMinute + differenzMinute;
             int neuBisMinute = dragedTermin.bisStunde * 60 + dragedTermin.bisMinute + differenzMinute;
-            SQLiteConnection conn = Database.DatabaseConnection();
+            if (neuVonMinute > startY && neuBisMinute > startY && neuBisMinute < 1420)
+            {
+                SQLiteConnection conn = Database.DatabaseConnection();
                 string insertTerminQuery = "UPDATE termin SET `vonStunde`=@vonStunde, `vonMinute`=@vonMinute,`bisStunde`=@bisStunde,`bisMinute`=@bisMinute WHERE terminID=@id";
                 Database.IsConnectionOpen(conn);
                 SQLiteCommand command = new SQLiteCommand(insertTerminQuery, conn);
@@ -458,6 +466,7 @@ namespace Assistaplanner
                 command.Parameters.AddWithValue("@bisStunde", neuBisMinute / 60);
                 command.Parameters.AddWithValue("@bisMinute", neuBisMinute % 60);
                 var result = command.ExecuteNonQuery();
+            }
             RenderTermine();
 
         }
