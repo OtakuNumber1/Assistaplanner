@@ -23,7 +23,7 @@ namespace Assistaplanner
     public partial class NeuerTermin : Window
     {
         private int kw;
-        private Selection terminSerienSelection;
+        //private Selection terminSerienSelection;
         private bool darfTerminSerieGeöffnetWerden;
         public NeuerTermin(int kw)
         {

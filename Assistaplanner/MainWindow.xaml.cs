@@ -1,24 +1,18 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Drawing;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Aspose.Pdf;
 using Microsoft.Win32;
+using System.Data;
+using System.Windows.Threading;
+using System.Windows.Controls.Primitives;
 
 namespace Assistaplanner
 {
@@ -28,7 +22,8 @@ namespace Assistaplanner
     public partial class MainWindow : Window
     {
         int kw;
-        DataObject dao;
+        DispatcherTimer dt;
+        Button lastButtonOn;
         /*public MainWindow()
         {
             
@@ -37,7 +32,11 @@ namespace Assistaplanner
         {
 
             InitializeComponent();
+            dt = new DispatcherTimer();
+            dt.Interval = new TimeSpan(0, 0, 2);// zwei Sekunden warten
+            dt.Tick += new EventHandler(dt_Tick);
             kw = 1;
+            kwZahl.Content = kw;
             for (int i = 1; i < 53; i++)
             {
                 kalenderWochenPicker.Items.Add(i);
@@ -51,7 +50,12 @@ namespace Assistaplanner
             }
         }
 
-
+        private void dt_Tick(object sender, EventArgs e)
+        {
+            Termin t = lastButtonOn.DataContext as Termin;
+            //Fenster aufmachen
+            
+        }
 
         private void neuerTerminButton_Click(object sender, RoutedEventArgs e)
         {
@@ -132,7 +136,8 @@ namespace Assistaplanner
                     button.Height = Math.Max(0, bisMinuten - startMinute) / (24.0 * 60.0) * totalHeight;
                     button.Margin = new Thickness(point.X, startY + startMinute / (24.0 * 60.0) * totalHeight, 0, 0);
                     button.Content = termin.TerminTitel;
-                    
+                    button.MouseEnter += new MouseEventHandler(EnterButton);
+                    button.MouseLeave += new MouseEventHandler(LeaveButton);
                     button.MouseMove += new MouseEventHandler(Start_Drag);
                     List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
                     if (kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).Count() > 0)
@@ -140,18 +145,44 @@ namespace Assistaplanner
                         System.Windows.Media.Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
                         button.Background = new SolidColorBrush(color);
                     }
-                   // button.Click += (sender, e) =>
-                    //{
-                      //  TerminBearbeiten terminBearbeiten = new TerminBearbeiten(termin);
-                        //terminBearbeiten.ShowDialog();
-                        //RenderTermine();
-                    //};
+                    button.MouseRightButtonDown += (sender, e) =>
+                    {
+                       
+                        ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
+                        cm.PlacementTarget = sender as Button;
+                        foreach(MenuItem m in cm.Items)
+                        {
+                            m.DataContext = sender;
+                        }
+                        cm.IsOpen = true;
 
+                                             
+                    };
                     kalender.Children.Add(button);
                     Panel.SetZIndex(button, 0);
                 }
             }
         }
+
+        private void LeaveButton(object sender, MouseEventArgs e)
+        {
+            
+            dt.Stop();
+        }
+
+        private void EnterButton(object sender, MouseEventArgs e)
+        {
+            lastButtonOn = sender as Button;
+            Termin t = lastButtonOn.DataContext as Termin;
+            dt.Start();
+            Console.WriteLine("Länger wie 2 Sekunden auf Button mit TerminID " + t.TerminID);
+            String content = "Titel: " + t.TerminTitel + " @ " + "Von: " + t.vonStunde +":"+ t.vonMinute + " @ " + "Bis: " + t.bisStunde + ":" + t.bisMinute;
+            content = content.Replace("@", System.Environment.NewLine);
+            ToolTip t1 = new ToolTip();
+            t1.Content = content;
+            lastButtonOn.ToolTip = t1;
+        }
+
 
         private void Start_Drag(object sender, MouseEventArgs e)
         {
@@ -277,7 +308,15 @@ namespace Assistaplanner
         {
            if(kw != 52)
             {
+
                 kw += 1;
+                kwZahl.Content = kw;
+                RenderTermine();
+           }
+            if (kw == 52)
+            {
+                kw = 1;
+                kwZahl.Content = kw;
                 RenderTermine();
             }
         }
@@ -289,7 +328,15 @@ namespace Assistaplanner
 
             if (kw != 1)
             {
-                kw -= 1;
+                    kw -= 1;
+                    kwZahl.Content = kw;
+                    RenderTermine();
+                
+            }
+            if(kw == 1)
+            {
+                kw = 52;
+                kwZahl.Content = kw;
                 RenderTermine();
             }
         
@@ -300,7 +347,7 @@ namespace Assistaplanner
             {
                 
 
-                String filename = "week.png";
+                //String filename = "week.png";
 
 
                 int screenLeft = 20;
@@ -368,6 +415,36 @@ namespace Assistaplanner
             }
         }
 
+        
+        private void Edit_OnClick(object sender, RoutedEventArgs e)
+        {
+            MenuItem cm = sender as MenuItem;
+            Button clickedButton = cm.DataContext as Button;
+            Termin clickedTermin = clickedButton.DataContext as Termin;
+            Console.WriteLine(clickedTermin.TerminID);
+            TerminBearbeiten tb = new TerminBearbeiten(clickedTermin);
+            tb.ShowDialog();
+            RenderTermine();
+        }
+        private void Delete_OnClick(object sender, RoutedEventArgs e)
+        {
+
+            MenuItem cm = sender as MenuItem;
+            Button clickedButton = cm.DataContext as Button;
+            Termin clickedTermin = clickedButton.DataContext as Termin;
+
+            SQLiteConnection conn = Database.DatabaseConnection();
+
+            string deleteQuery = "DELETE FROM termin WHERE terminID=@id";
+            SQLiteCommand command = new SQLiteCommand(deleteQuery, conn);
+
+            Database.IsConnectionOpen(conn);
+            command.Parameters.AddWithValue("@id", clickedTermin.TerminID);
+            var result = command.ExecuteNonQuery();
+            RenderTermine();
+            
+        }
+
         private void kalenderGrid_Drop(object sender, DragEventArgs e)
         {
             //Termin aus Daten holen
@@ -393,7 +470,9 @@ namespace Assistaplanner
             
             int neuVonMinute = dragedTermin.vonStunde * 60 + dragedTermin.vonMinute + differenzMinute;
             int neuBisMinute = dragedTermin.bisStunde * 60 + dragedTermin.bisMinute + differenzMinute;
-            SQLiteConnection conn = Database.DatabaseConnection();
+            if (neuVonMinute > 0 && neuBisMinute > 0 && neuBisMinute < 1420)
+            {
+                SQLiteConnection conn = Database.DatabaseConnection();
                 string insertTerminQuery = "UPDATE termin SET `vonStunde`=@vonStunde, `vonMinute`=@vonMinute,`bisStunde`=@bisStunde,`bisMinute`=@bisMinute WHERE terminID=@id";
                 Database.IsConnectionOpen(conn);
                 SQLiteCommand command = new SQLiteCommand(insertTerminQuery, conn);
@@ -403,6 +482,7 @@ namespace Assistaplanner
                 command.Parameters.AddWithValue("@bisStunde", neuBisMinute / 60);
                 command.Parameters.AddWithValue("@bisMinute", neuBisMinute % 60);
                 var result = command.ExecuteNonQuery();
+            }
             RenderTermine();
 
         }
