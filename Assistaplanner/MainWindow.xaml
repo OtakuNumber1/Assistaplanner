@@ -8,7 +8,7 @@
         Title="AssistaPlanner" Height="1080" Width="1920" Loaded="Window_Loaded" WindowState="Maximized" WindowStyle="SingleBorderWindow" Background="WhiteSmoke" FontFamily="Fonts/#Dosis">
     <Window.Resources>
         <ContextMenu x:Key="cmButton">
-           
+
             <MenuItem Header="Edit"
                       Click="Edit_OnClick"
                       CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
@@ -19,7 +19,7 @@
     </Window.Resources>
 
 
-    
+
     <Grid AllowDrop="True" Drop="kalenderGrid_Drop" Background="WhiteSmoke" DragOver="Grid_DragOver" Name="KalenderGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="326*"/>
@@ -77,14 +77,16 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Background="WhiteSmoke" Width="75" Height="75" BorderThickness="0"  Click="vorherigeButton_Click" >
                         <Image Source="Images/linker-pfeil.png" Width="75" VerticalAlignment="Center"/>
                     </Button>
 
-                    <Label Content="KW" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center" FontSize="36" FontWeight="Heavy" Height="69" Margin="27,23,27,10"/>
+                    <Label Content="KW" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center" FontSize="30" FontWeight="Heavy" Height="69" Margin="10,23,10,10" Width="66"/>
+                    <Label x:Name="kwZahl" VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" FontSize="30" FontWeight="Heavy" Height="69" Margin="10,23,10,10" Width="66"/>
 
-                    <Button Grid.Column="2" Background="WhiteSmoke" Width="75" Height="75" BorderThickness="0" Click="nächsteButton_Click" >
+                    <Button Grid.Column="3" Background="WhiteSmoke" Width="75" Height="75" BorderThickness="0" Click="nächsteButton_Click" >
                         <Image Source="Images/rechter-pfeil.png" Width="75" VerticalAlignment="Center" RenderTransformOrigin="-0.045,0.535"/>
                     </Button>
 

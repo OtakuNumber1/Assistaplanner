@@ -22,7 +22,6 @@ namespace Assistaplanner
     public partial class MainWindow : Window
     {
         int kw;
-        DataObject dao;
         DispatcherTimer dt;
         Button lastButtonOn;
         /*public MainWindow()
@@ -37,6 +36,7 @@ namespace Assistaplanner
             dt.Interval = new TimeSpan(0, 0, 2);// zwei Sekunden warten
             dt.Tick += new EventHandler(dt_Tick);
             kw = 1;
+            kwZahl.Content = kw;
             for (int i = 1; i < 53; i++)
             {
                 kalenderWochenPicker.Items.Add(i);
@@ -308,7 +308,15 @@ namespace Assistaplanner
         {
            if(kw != 52)
             {
+
                 kw += 1;
+                kwZahl.Content = kw;
+                RenderTermine();
+           }
+            if (kw == 52)
+            {
+                kw = 1;
+                kwZahl.Content = kw;
                 RenderTermine();
             }
         }
@@ -320,7 +328,15 @@ namespace Assistaplanner
 
             if (kw != 1)
             {
-                kw -= 1;
+                    kw -= 1;
+                    kwZahl.Content = kw;
+                    RenderTermine();
+                
+            }
+            if(kw == 1)
+            {
+                kw = 52;
+                kwZahl.Content = kw;
                 RenderTermine();
             }
         
@@ -331,7 +347,7 @@ namespace Assistaplanner
             {
                 
 
-                String filename = "week.png";
+                //String filename = "week.png";
 
 
                 int screenLeft = 20;
