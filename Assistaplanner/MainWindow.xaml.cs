@@ -454,7 +454,7 @@ namespace Assistaplanner
             
             int neuVonMinute = dragedTermin.vonStunde * 60 + dragedTermin.vonMinute + differenzMinute;
             int neuBisMinute = dragedTermin.bisStunde * 60 + dragedTermin.bisMinute + differenzMinute;
-            if (neuVonMinute > startY && neuBisMinute > startY && neuBisMinute < 1420)
+            if (neuVonMinute > 0 && neuBisMinute > 0 && neuBisMinute < 1420)
             {
                 SQLiteConnection conn = Database.DatabaseConnection();
                 string insertTerminQuery = "UPDATE termin SET `vonStunde`=@vonStunde, `vonMinute`=@vonMinute,`bisStunde`=@bisStunde,`bisMinute`=@bisMinute WHERE terminID=@id";
