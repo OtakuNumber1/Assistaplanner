@@ -14,6 +14,7 @@ namespace Assistaplanner
         public string TerminUntertitel { get; set; }
         public int Kalenderwoche { get; set;}
         public string Wochentag { get; set; }
+        public int spalte { get; set; }
         public int vonStunde { get; set; }
         public int vonMinute { get; set; }
         public int bisStunde { get; set; }
