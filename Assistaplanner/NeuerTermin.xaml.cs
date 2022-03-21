@@ -156,6 +156,10 @@ namespace Assistaplanner
 
             Database.IsConnectionOpen(conn);
             Termin einzufügen = allesAusgefülltCheck();
+            int spalte = WelcheTerminSpalte(einzufügen);
+
+            einzufügen.spalte = spalte;
+
             if(einzufügen != null)
             {
 
@@ -178,6 +182,80 @@ namespace Assistaplanner
 
             }
         }
+
+        public int WelcheTerminSpalte(Termin termin)
+        {
+            int spalte = 0;
+
+            List<Termin> termineVonTag = SQLiteDataAccess.LoadTermineFromDayOfKalenderwoche(termin.Wochentag, termin.Kalenderwoche);
+
+            foreach(Termin t in termineVonTag)
+            {
+                if(UeberschneidenSichTermine(t, termin) == true)
+                {
+                    spalte++;
+                }
+            }
+            Console.WriteLine(spalte);
+            return spalte;
+        }
+
+
+        public bool UeberschneidenSichTermine(Termin bestehenderTermin, Termin neuerTermin)
+        {
+            string t1VonUhrzeit = bestehenderTermin.vonStunde+":"+ bestehenderTermin.vonMinute;
+            string t1BisUhrzeit = bestehenderTermin.bisStunde + ":" + bestehenderTermin.bisMinute;
+
+
+            string t2VonUhrzeit = neuerTermin.vonStunde + ":" + neuerTermin.vonMinute;
+            string t2BisUhrzeit = neuerTermin.bisStunde + ":" + neuerTermin.bisMinute;
+
+            DateTime von = DateTime.Parse(t1VonUhrzeit);
+            DateTime bis = DateTime.Parse(t1BisUhrzeit);
+
+            DateTime vonNeu = DateTime.Parse(t2VonUhrzeit);
+            DateTime bisNeu = DateTime.Parse(t2BisUhrzeit);
+
+            if (vonNeu.Ticks > von.Ticks && vonNeu.Ticks < bis.Ticks)
+            {
+                return true;
+            }
+            else
+            {
+                if (bisNeu.Ticks > von.Ticks && bisNeu.Ticks < bis.Ticks)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (vonNeu.Ticks > von.Ticks && vonNeu.Ticks < bis.Ticks)
+                    {
+
+                        return true;
+                    }
+                    else
+                    {
+                        if (bisNeu.Ticks > von.Ticks && bisNeu.Ticks < bis.Ticks)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            if (vonNeu.Ticks <= von.Ticks && bisNeu.Ticks >= bis.Ticks)
+                            {
+                               
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         private void vonStunde_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

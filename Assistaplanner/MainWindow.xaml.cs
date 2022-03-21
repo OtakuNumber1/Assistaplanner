@@ -323,15 +323,11 @@ namespace Assistaplanner
 
         private void vorherigeButton_Click(object sender, RoutedEventArgs e)
         {
-
-
-
             if (kw != 1)
             {
                     kw -= 1;
                     kwZahl.Content = kw;
-                    RenderTermine();
-                
+                    RenderTermine();    
             }
             if(kw == 1)
             {
@@ -339,7 +335,6 @@ namespace Assistaplanner
                 kwZahl.Content = kw;
                 RenderTermine();
             }
-        
         }
 
         private void PDFButtonT_Click(object sender, RoutedEventArgs e)
@@ -522,51 +517,7 @@ namespace Assistaplanner
 
         private void Grid_DragOver(object sender, DragEventArgs e)
         {
-            //Termin aus Daten holen
-            /*Termin dragedTermin = e.Data.GetData("Termin") as Termin;
-            Button origButton = e.Data.GetData("Button") as Button;
-            System.Windows.Point positionOriginalButton = (System.Windows.Point)e.Data.GetData("PointButton");
-            //Punkt des Buttons holen
-            System.Windows.Point p = e.GetPosition(Application.Current.MainWindow);
-            Console.WriteLine(p.Y);
-            double startY = kalender.ActualHeight / 26.0 * 2;
-            double totalHeight = kalender.ActualHeight * 24.0 / 26;
-            //Termin auf neue Uhrzeit umändern
-            System.Windows.Point gerundet = GetXVonButton(origButton, dragedTermin);
-            System.Windows.Point neuePosition = new System.Windows.Point();
-            neuePosition.X = gerundet.X;
-
-            double differenz = p.Y - positionOriginalButton.Y;
-
-            double prozentÄnderung = differenz / totalHeight;
-            Console.WriteLine("Prozent Änderung" + prozentÄnderung);
-            int differenzMinute = Convert.ToInt32(24 * 60 * prozentÄnderung);
-            Console.WriteLine(differenzMinute);
-
-            int stundenÄnderung = differenzMinute / 60;
-            int minutenÄnderung = differenzMinute % 60;
-
-            Console.WriteLine("Termin ändert sich um Stunde: " + stundenÄnderung + " Minute: " + minutenÄnderung);
-
-            int neuVonMinute = dragedTermin.vonMinute + minutenÄnderung;
-            int neuVonStunde = dragedTermin.vonStunde + stundenÄnderung;
-
-            int neuBisMinute = dragedTermin.bisMinute + minutenÄnderung;
-            int neuBisStunde = dragedTermin.bisStunde + stundenÄnderung;
-            if(neuVonMinute < 0) { neuVonMinute = 0; }
-            if(neuVonStunde < 0) { neuVonStunde = 0; }
-            if(neuBisStunde > 24) { neuBisStunde = 23; }
-            SQLiteConnection conn = Database.DatabaseConnection();
-            string insertTerminQuery = "UPDATE termin SET `vonStunde`=@vonStunde, `vonMinute`=@vonMinute,`bisStunde`=@bisStunde,`bisMinute`=@bisMinute WHERE terminID=@id";
-            Database.IsConnectionOpen(conn);
-            SQLiteCommand command = new SQLiteCommand(insertTerminQuery, conn);
-            command.Parameters.AddWithValue("@id", dragedTermin.TerminID);
-            command.Parameters.AddWithValue("@vonStunde", neuVonStunde);
-            command.Parameters.AddWithValue("@vonMinute", neuVonMinute);
-            command.Parameters.AddWithValue("@bisStunde", neuBisStunde);
-            command.Parameters.AddWithValue("@bisMinute", neuBisMinute);
-            var result = command.ExecuteNonQuery();
-            RenderTermine();*/
+ 
         }
     }
 }
