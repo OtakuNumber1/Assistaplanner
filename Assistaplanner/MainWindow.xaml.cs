@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using System.Data;
 using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
+using Dapper;
 
 namespace Assistaplanner
 {
@@ -87,6 +88,62 @@ namespace Assistaplanner
             RenderTermine();
         }
 
+        public bool UeberschneidenSichTermine(Termin bestehenderTermin, Termin neuerTermin)
+        {
+            string t1VonUhrzeit = bestehenderTermin.vonStunde + ":" + bestehenderTermin.vonMinute;
+            string t1BisUhrzeit = bestehenderTermin.bisStunde + ":" + bestehenderTermin.bisMinute;
+
+
+            string t2VonUhrzeit = neuerTermin.vonStunde + ":" + neuerTermin.vonMinute;
+            string t2BisUhrzeit = neuerTermin.bisStunde + ":" + neuerTermin.bisMinute;
+
+            DateTime von = DateTime.Parse(t1VonUhrzeit);
+            DateTime bis = DateTime.Parse(t1BisUhrzeit);
+
+            DateTime vonNeu = DateTime.Parse(t2VonUhrzeit);
+            DateTime bisNeu = DateTime.Parse(t2BisUhrzeit);
+
+            if (vonNeu.Ticks > von.Ticks && vonNeu.Ticks < bis.Ticks)
+            {
+                return true;
+            }
+            else
+            {
+                if (bisNeu.Ticks > von.Ticks && bisNeu.Ticks < bis.Ticks)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (vonNeu.Ticks > von.Ticks && vonNeu.Ticks < bis.Ticks)
+                    {
+
+                        return true;
+                    }
+                    else
+                    {
+                        if (bisNeu.Ticks > von.Ticks && bisNeu.Ticks < bis.Ticks)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            if (vonNeu.Ticks <= von.Ticks && bisNeu.Ticks >= bis.Ticks)
+                            {
+
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
         private void RenderTermine()
         {
             List<UIElement> delete = new List<UIElement>();
@@ -94,11 +151,13 @@ namespace Assistaplanner
             kalender.Children.Clear();
             kalender.Children.Add(kalenderGrid);
 
-            List<Termin> termine = SQLiteDataAccess.LoadTermineOfKalenderwoche(kw);
-            foreach (Termin termin in termine)
-            {
-                Label label = null;
-                switch (termin.Wochentag)
+           
+             String[] wochentage = { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag" };
+            Label label = null;
+           
+            foreach (String s in wochentage)
+                {
+                switch (s)
                 {
                     case "Montag":
                         label = montag;
@@ -122,46 +181,73 @@ namespace Assistaplanner
                         label = sonntag;
                         break;
                 }
-                if (label != null)
-                {
-                    System.Windows.Point point = label.TransformToAncestor(kalender).Transform(new System.Windows.Point(0, 0));
-                    double startY = kalender.ActualHeight / 26.0 * 2;
-                    double totalHeight = kalender.ActualHeight * 24.0 / 26;
-                    int startMinute = termin.vonMinute + 60 * termin.vonStunde;
-                    int bisMinuten = termin.bisMinute + 60 * termin.bisStunde;
-
-                    Button button = new Button();
-                    button.DataContext = termin;
-                    button.Width = kalender.ActualWidth * 250 / (125 + 250 * 7);
-                    button.Height = Math.Max(0, bisMinuten - startMinute) / (24.0 * 60.0) * totalHeight;
-                    button.Margin = new Thickness(point.X, startY + startMinute / (24.0 * 60.0) * totalHeight, 0, 0);
-                    button.Content = termin.TerminTitel;
-                    button.MouseEnter += new MouseEventHandler(EnterButton);
-                    button.MouseLeave += new MouseEventHandler(LeaveButton);
-                    button.MouseMove += new MouseEventHandler(Start_Drag);
-                    List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
-                    if (kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).Count() > 0)
+                
+                    List<Termin> sortiert = SQLiteDataAccess.LoadTermineFromDayOfKalenderwoche(s, kw);
+                    foreach (Termin t in sortiert)
                     {
-                        System.Windows.Media.Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
-                        button.Background = new SolidColorBrush(color);
+                        t.TerminUntertitel = t.vonStunde + ":" + t.vonMinute;
                     }
-                    button.MouseRightButtonDown += (sender, e) =>
-                    {
-                       
-                        ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
-                        cm.PlacementTarget = sender as Button;
-                        foreach(MenuItem m in cm.Items)
-                        {
-                            m.DataContext = sender;
-                        }
-                        cm.IsOpen = true;
 
-                                             
-                    };
-                    kalender.Children.Add(button);
-                    Panel.SetZIndex(button, 0);
-                }
+                    sortiert = sortiert.OrderBy(x => DateTime.Parse(x.TerminUntertitel)).AsList<Termin>();
+
+                    foreach (Termin termin in sortiert)
+                    {
+                        termin.spalte = -1;
+                        foreach (Termin t1 in sortiert)
+                        {
+                            if (UeberschneidenSichTermine(t1, termin))
+                            {
+                               termin.spalte++;
+                            }
+
+                        }
+                        Console.Write(termin.TerminID + ": " + termin.spalte);
+
+                        Console.WriteLine();
+
+                            System.Windows.Point point = label.TransformToAncestor(kalender).Transform(new System.Windows.Point(0, 0));
+                            double startY = kalender.ActualHeight / 26.0 * 2;
+                            double totalHeight = kalender.ActualHeight * 24.0 / 26;
+                            int startMinute = termin.vonMinute + 60 * termin.vonStunde;
+                    int bisMinuten = termin.bisMinute + 60 * termin.bisStunde;
+                    Button button = new Button();
+
+                            int marginLeft = 0;
+                            button.DataContext = termin;
+                            button.Width = kalender.ActualWidth * 250 / (125 + 250 * 7);
+                            button.Height = Math.Max(0, bisMinuten - startMinute) / (24.0 * 60.0) * totalHeight;
+                            button.Margin = new Thickness(point.X, startY + startMinute / (24.0 * 60.0) * totalHeight, 0, 0);
+                            button.Content = termin.TerminTitel;
+                            button.MouseEnter += new MouseEventHandler(EnterButton);
+                            button.MouseLeave += new MouseEventHandler(LeaveButton);
+                            button.MouseMove += new MouseEventHandler(Start_Drag);
+                            List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
+                            if (kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).Count() > 0)
+                            {
+                                System.Windows.Media.Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
+                                button.Background = new SolidColorBrush(color);
+                            }
+                            button.MouseRightButtonDown += (sender, e) =>
+                            {
+
+                                ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
+                                cm.PlacementTarget = sender as Button;
+                                foreach (MenuItem m in cm.Items)
+                                {
+                                    m.DataContext = sender;
+                                }
+                                cm.IsOpen = true;
+
+
+                            };
+                            kalender.Children.Add(button);
+                            Panel.SetZIndex(button, 0);
+                        
+                    }
             }
+
+           
+       
         }
 
         private void LeaveButton(object sender, MouseEventArgs e)
@@ -306,18 +392,21 @@ namespace Assistaplanner
 
         private void nächsteButton_Click(object sender, RoutedEventArgs e)
         {
-           if(kw != 52)
+            if (kw != 52)
             {
 
                 kw += 1;
                 kwZahl.Content = kw;
                 RenderTermine();
-           }
-            if (kw == 52)
+            }
+            else
             {
-                kw = 1;
-                kwZahl.Content = kw;
-                RenderTermine();
+                if (kw == 52)
+                {
+                    kw = 1;
+                    kwZahl.Content = kw;
+                    RenderTermine();
+                }
             }
         }
 
@@ -325,15 +414,18 @@ namespace Assistaplanner
         {
             if (kw != 1)
             {
-                    kw -= 1;
-                    kwZahl.Content = kw;
-                    RenderTermine();    
-            }
-            if(kw == 1)
-            {
-                kw = 52;
+                kw -= 1;
                 kwZahl.Content = kw;
                 RenderTermine();
+            }
+            else
+            {
+                if (kw == 1)
+                {
+                    kw = 52;
+                    kwZahl.Content = kw;
+                    RenderTermine();
+                }
             }
         }
 
