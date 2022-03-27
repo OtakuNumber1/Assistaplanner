@@ -190,60 +190,74 @@ namespace Assistaplanner
 
                     sortiert = sortiert.OrderBy(x => DateTime.Parse(x.TerminUntertitel)).AsList<Termin>();
 
-                    foreach (Termin termin in sortiert)
+                    //Spalten zuweisen
+                    int maxSpalte = 0;
+                List<Termin> abgearbeitet = new List<Termin>();
+                foreach (Termin termin in sortiert)
+                {
+                    termin.spalte = 0;
+                    foreach (Termin t1 in abgearbeitet)
                     {
-                        termin.spalte = -1;
-                        foreach (Termin t1 in sortiert)
+                        if (UeberschneidenSichTermine(t1, termin))
                         {
-                            if (UeberschneidenSichTermine(t1, termin))
+                            termin.spalte++;
+                            if (maxSpalte < termin.spalte)
                             {
-                               termin.spalte++;
+                                maxSpalte = termin.spalte;
                             }
-
                         }
-                        Console.Write(termin.TerminID + ": " + termin.spalte);
+                    }
+                    abgearbeitet.Add(termin);
+                }
+                //Rendern
+                foreach (Termin termin in sortiert)
+                {
+                    Console.Write(termin.TerminID + ": " + termin.spalte);
 
-                        Console.WriteLine();
+                    Console.WriteLine();
 
-                            System.Windows.Point point = label.TransformToAncestor(kalender).Transform(new System.Windows.Point(0, 0));
-                            double startY = kalender.ActualHeight / 26.0 * 2;
-                            double totalHeight = kalender.ActualHeight * 24.0 / 26;
-                            int startMinute = termin.vonMinute + 60 * termin.vonStunde;
+                    double totalColWidth = kalender.ActualWidth * 250 / (125 + 250 * 7);
+                    double subColWidth = totalColWidth / (maxSpalte + 1);
+
+                    System.Windows.Point point = label.TransformToAncestor(kalender).Transform(new System.Windows.Point(0, 0));
+                    double startY = kalender.ActualHeight / 26.0 * 2;
+                    double totalHeight = kalender.ActualHeight * 24.0 / 26;
+                    int startMinute = termin.vonMinute + 60 * termin.vonStunde;
                     int bisMinuten = termin.bisMinute + 60 * termin.bisStunde;
                     Button button = new Button();
 
-                            int marginLeft = 0;
-                            button.DataContext = termin;
-                            button.Width = kalender.ActualWidth * 250 / (125 + 250 * 7);
-                            button.Height = Math.Max(0, bisMinuten - startMinute) / (24.0 * 60.0) * totalHeight;
-                            button.Margin = new Thickness(point.X, startY + startMinute / (24.0 * 60.0) * totalHeight, 0, 0);
-                            button.Content = termin.TerminTitel;
-                            button.MouseEnter += new MouseEventHandler(EnterButton);
-                            button.MouseLeave += new MouseEventHandler(LeaveButton);
-                            button.MouseMove += new MouseEventHandler(Start_Drag);
-                            List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
-                            if (kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).Count() > 0)
-                            {
-                                System.Windows.Media.Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
-                                button.Background = new SolidColorBrush(color);
-                            }
-                            button.MouseRightButtonDown += (sender, e) =>
-                            {
-
-                                ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
-                                cm.PlacementTarget = sender as Button;
-                                foreach (MenuItem m in cm.Items)
-                                {
-                                    m.DataContext = sender;
-                                }
-                                cm.IsOpen = true;
-
-
-                            };
-                            kalender.Children.Add(button);
-                            Panel.SetZIndex(button, 0);
-                        
+                    double marginLeft = point.X + subColWidth * termin.spalte;
+                    button.DataContext = termin;
+                    button.Width = subColWidth;
+                    button.Height = Math.Max(0, bisMinuten - startMinute) / (24.0 * 60.0) * totalHeight;
+                    button.Margin = new Thickness(marginLeft, startY + startMinute / (24.0 * 60.0) * totalHeight, 0, 0);
+                    button.Content = termin.TerminTitel;
+                    button.MouseEnter += new MouseEventHandler(EnterButton);
+                    button.MouseLeave += new MouseEventHandler(LeaveButton);
+                    button.MouseMove += new MouseEventHandler(Start_Drag);
+                    List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
+                    if (kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).Count() > 0)
+                    {
+                        System.Windows.Media.Color color = ButtonColour(kategorien.Where(k => k.terminKategorieID == termin.TerminKategorie).First().KategorieFarbe);
+                        button.Background = new SolidColorBrush(color);
                     }
+                    button.MouseRightButtonDown += (sender, e) =>
+                    {
+
+                        ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
+                        cm.PlacementTarget = sender as Button;
+                        foreach (MenuItem m in cm.Items)
+                        {
+                            m.DataContext = sender;
+                        }
+                        cm.IsOpen = true;
+
+
+                    };
+                    kalender.Children.Add(button);
+                    Panel.SetZIndex(button, 0);
+
+                }
             }
 
            

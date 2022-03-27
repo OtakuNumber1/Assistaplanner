@@ -170,6 +170,7 @@ namespace Assistaplanner
                 command.Parameters.AddWithValue("@kalenderwoche", einzufügen.Kalenderwoche);
                 command.Parameters.AddWithValue("@terminUntertitel", einzufügen.TerminUntertitel);
                 command.Parameters.AddWithValue("@wochentag", einzufügen.Wochentag);
+                
                 command.Parameters.AddWithValue("@vonStunde", einzufügen.vonStunde);
                 command.Parameters.AddWithValue("@vonMinute", einzufügen.vonMinute);
                 command.Parameters.AddWithValue("@bisStunde", einzufügen.bisStunde);
