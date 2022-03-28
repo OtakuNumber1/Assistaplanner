@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace Assistaplanner
             this.kw = kw;
             List<string> wochentage = new List<string> { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag" };
             InitializeComponent();
+            termineNachDatumSortieren();
             List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
             KategoriePicker.ItemsSource = kategorien;
             KategoriePicker.DisplayMemberPath = "KategorieName";
@@ -168,6 +170,7 @@ namespace Assistaplanner
                 command.Parameters.AddWithValue("@kalenderwoche", einzufügen.Kalenderwoche);
                 command.Parameters.AddWithValue("@terminUntertitel", einzufügen.TerminUntertitel);
                 command.Parameters.AddWithValue("@wochentag", einzufügen.Wochentag);
+                
                 command.Parameters.AddWithValue("@vonStunde", einzufügen.vonStunde);
                 command.Parameters.AddWithValue("@vonMinute", einzufügen.vonMinute);
                 command.Parameters.AddWithValue("@bisStunde", einzufügen.bisStunde);
@@ -182,10 +185,43 @@ namespace Assistaplanner
 
             }
         }
+        public void termineNachDatumSortieren()
+        {
+            String[] wochentage = { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
+          
+            foreach (String s in wochentage)
+            {
+                List<Termin> sortiert = SQLiteDataAccess.LoadTermineFromDayOfKalenderwoche(s, kw);
+                foreach(Termin t in sortiert)
+                {
+                    t.TerminUntertitel = t.vonStunde + ":" + t.vonMinute;
+                }
+
+                sortiert = sortiert.OrderBy(x => DateTime.Parse(x.TerminUntertitel)).AsList<Termin>();
+
+                foreach (Termin t in sortiert)
+                {
+                    t.spalte = -1;
+                    foreach(Termin t1 in sortiert)
+                    {
+                        if(UeberschneidenSichTermine(t1, t))
+                        {
+                            t.spalte++;
+                        }
+                        
+                    }
+                    Console.Write(t.TerminID + ": " + t.spalte);
+
+                    Console.WriteLine();
+                }
+            }
+        } 
+
 
         public int WelcheTerminSpalte(Termin termin)
         {
             int spalte = 0;
+
 
             List<Termin> termineVonTag = SQLiteDataAccess.LoadTermineFromDayOfKalenderwoche(termin.Wochentag, termin.Kalenderwoche);
 
