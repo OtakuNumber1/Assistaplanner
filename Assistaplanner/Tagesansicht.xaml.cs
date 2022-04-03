@@ -21,6 +21,7 @@ using iTextSharp.text.pdf;
 using Aspose.Pdf;
 using System.Drawing;
 using Microsoft.Win32;
+using Dapper;
 
 namespace Assistaplanner
 {
@@ -48,16 +49,45 @@ namespace Assistaplanner
             tagkalender.Children.Clear();
             tagkalender.Children.Add(tagkalenderGrid);
 
-            List<Termin> termine = SQLiteDataAccess.LoadTermineFromDayOfKalenderwoche(Wochentag, kw);
-            foreach (Termin termin in termine)
+            List<Termin> sortiert = SQLiteDataAccess.LoadTermineFromDayOfKalenderwoche(this.Wochentag, kw);
+            foreach (Termin t in sortiert)
+            {
+                t.zeit = DateTime.Parse(t.vonStunde + ":" + t.vonMinute);
+            }
+
+            sortiert = sortiert.OrderBy(x => x.zeit).AsList<Termin>();
+
+
+            //Spalten zuweisen
+            int maxSpalte = 0;
+            List<Termin> abgearbeitet = new List<Termin>();
+            foreach (Termin termin in sortiert)
+            {
+                termin.spalte = 0;
+                foreach (Termin t1 in abgearbeitet)
+                {
+                    if (UeberschneidenSichTermine(t1, termin))
+                    {
+                        termin.spalte++;
+                        if (maxSpalte < termin.spalte)
+                        {
+                            maxSpalte = termin.spalte;
+                        }
+                    }
+                }
+                abgearbeitet.Add(termin);
+            }
+
+            foreach (Termin termin in sortiert)
             {
                 Console.WriteLine("1");
                 Label label = erste;
                
                 if (label != null)
                 {
-                    
 
+                    double totalColWidth = tagkalender.ActualWidth * 250 / (125 + 250 * 4);
+                    double subColWidth = totalColWidth * (maxSpalte);
 
                     Console.WriteLine("Label");
                     System.Windows.Point point = label.TransformToAncestor(tagkalender).Transform(new System.Windows.Point(0, 0));
@@ -66,13 +96,11 @@ namespace Assistaplanner
                     int startMinute = termin.vonMinute + 60 * termin.vonStunde;
                     int bisMinuten = termin.bisMinute + 60 * termin.bisStunde;
 
-                    
-
-
+                    double marginLeft = point.X + subColWidth * termin.spalte;
                     Button button = new Button();
-                    button.Width = tagkalender.ActualWidth * 250 / (125 + 250 * 4);
+                    button.Width = subColWidth;
                     button.Height = Math.Max(0, bisMinuten - startMinute) / (24.0 * 60.0) * totalHeight;
-                    button.Margin = new Thickness(point.X - 171, startY + startMinute / (24.0 * 60.0) * totalHeight, 0, 0);
+                    button.Margin = new Thickness(marginLeft -171, startY + startMinute / (24.0 * 60.0) * totalHeight, 0, 0);
                     button.Content = termin.TerminTitel;
                     List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
 
@@ -138,6 +166,61 @@ namespace Assistaplanner
             termine.ShowDialog();
             RenderTermine(Wochentag);
         }
+        public bool UeberschneidenSichTermine(Termin bestehenderTermin, Termin neuerTermin)
+        {
+            string t1VonUhrzeit = bestehenderTermin.vonStunde + ":" + bestehenderTermin.vonMinute;
+            string t1BisUhrzeit = bestehenderTermin.bisStunde + ":" + bestehenderTermin.bisMinute;
+
+
+            string t2VonUhrzeit = neuerTermin.vonStunde + ":" + neuerTermin.vonMinute;
+            string t2BisUhrzeit = neuerTermin.bisStunde + ":" + neuerTermin.bisMinute;
+
+            DateTime von = DateTime.Parse(t1VonUhrzeit);
+            DateTime bis = DateTime.Parse(t1BisUhrzeit);
+
+            DateTime vonNeu = DateTime.Parse(t2VonUhrzeit);
+            DateTime bisNeu = DateTime.Parse(t2BisUhrzeit);
+
+            if (vonNeu.Ticks > von.Ticks && vonNeu.Ticks < bis.Ticks)
+            {
+                return true;
+            }
+            else
+            {
+                if (bisNeu.Ticks > von.Ticks && bisNeu.Ticks < bis.Ticks)
+                {
+                    return true;
+                }
+                else
+                {
+                    if (vonNeu.Ticks > von.Ticks && vonNeu.Ticks < bis.Ticks)
+                    {
+
+                        return true;
+                    }
+                    else
+                    {
+                        if (bisNeu.Ticks > von.Ticks && bisNeu.Ticks < bis.Ticks)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            if (vonNeu.Ticks <= von.Ticks && bisNeu.Ticks >= bis.Ticks)
+                            {
+
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         private void kategorienlisteTagesansicht_Click(object sender, RoutedEventArgs e)
         {

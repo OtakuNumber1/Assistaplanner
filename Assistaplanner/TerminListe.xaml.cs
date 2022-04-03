@@ -72,5 +72,14 @@ namespace Assistaplanner
             List<Termin> aktuelleTermine = SQLiteDataAccess.LoadTermine();
             terminDataGrid.ItemsSource = aktuelleTermine;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            using (IDbConnection cnn = Database.DatabaseConnection())
+            {
+                cnn.Query<Termin>("delete from termin", new DynamicParameters());
+                TermineLaden();
+            }
+        }
     }
 }

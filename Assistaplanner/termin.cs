@@ -19,6 +19,7 @@ namespace Assistaplanner
         public int vonMinute { get; set; }
         public int bisStunde { get; set; }
         public int bisMinute { get; set; }
+        public DateTime zeit { get; set; }
         public string beschreibung { get; set; }
     }
 }

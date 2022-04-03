@@ -32,7 +32,6 @@ namespace Assistaplanner
             this.kw = kw;
             List<string> wochentage = new List<string> { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag" };
             InitializeComponent();
-            termineNachDatumSortieren();
             List<TerminKategorie> kategorien = ShowKategorien.KategorienLaden();
             KategoriePicker.ItemsSource = kategorien;
             KategoriePicker.DisplayMemberPath = "KategorieName";
@@ -59,6 +58,7 @@ namespace Assistaplanner
             {
                 isError = true;
                 errorText.Text = "Es wurde keine Kategorie ausgewählt";
+                return null;
             }
             if (TitelText.Text != null)
             {
@@ -68,6 +68,7 @@ namespace Assistaplanner
             {
                 isError = true;
                 errorText.Text = "Bitte geben Sie einen Titel ein!";
+                return null;
             }
 
             if (vonStunde.Text.Length != 0 && Convert.ToInt32(vonStunde.Text) <= 24 && Convert.ToInt32(vonStunde.Text) >= 0 )
@@ -78,6 +79,7 @@ namespace Assistaplanner
             {
                 isError = true;
                 errorText.Text = "Geben sie eine richtige Stunde ein: Von-Stunde";
+                return null;
             }
             if (vonMinute.Text.Length != 0 && Convert.ToInt32(vonMinute.Text) <= 60 && Convert.ToInt32(vonMinute.Text) >= 0 )
             {
@@ -95,6 +97,7 @@ namespace Assistaplanner
             {
                 isError = true;
                 errorText.Text = "Geben sie eine richtige Minute ein: Von-Minute";
+                return null;
             }
             if (bisStunde.Text.Length != 0 && Convert.ToInt32(bisStunde.Text) <= 24 && Convert.ToInt32(bisStunde.Text) >= 0 )
             {
@@ -104,6 +107,7 @@ namespace Assistaplanner
             {
                 isError = true;
                 errorText.Text = "Geben sie eine richtige Stunde ein: Bis-Stunde";
+                return null;
             }
             if (bisMinute.Text.Length != 0 && Convert.ToInt32(bisMinute.Text) <= 60 && Convert.ToInt32(bisMinute.Text) >= 0)
             {
@@ -120,6 +124,7 @@ namespace Assistaplanner
             {
                 isError = true;
                 errorText.Text = "Geben sie eine richtige Minute ein: Bis-Minute";
+                return null;
             }
             if (wochentagBox.Text.Length != 0)
             {
@@ -129,6 +134,7 @@ namespace Assistaplanner
             {
                 isError = true;
                 errorText.Text = "Geben Sie bitte einen Wochentag an";
+                return null;
             }
 
             termin.TerminUntertitel = UntertitelText.Text;
@@ -158,9 +164,6 @@ namespace Assistaplanner
 
             Database.IsConnectionOpen(conn);
             Termin einzufügen = allesAusgefülltCheck();
-            int spalte = WelcheTerminSpalte(einzufügen);
-
-            einzufügen.spalte = spalte;
 
             if(einzufügen != null)
             {
@@ -185,112 +188,7 @@ namespace Assistaplanner
 
             }
         }
-        public void termineNachDatumSortieren()
-        {
-            String[] wochentage = { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
-          
-            foreach (String s in wochentage)
-            {
-                List<Termin> sortiert = SQLiteDataAccess.LoadTermineFromDayOfKalenderwoche(s, kw);
-                foreach(Termin t in sortiert)
-                {
-                    t.TerminUntertitel = t.vonStunde + ":" + t.vonMinute;
-                }
 
-                sortiert = sortiert.OrderBy(x => DateTime.Parse(x.TerminUntertitel)).AsList<Termin>();
-
-                foreach (Termin t in sortiert)
-                {
-                    t.spalte = -1;
-                    foreach(Termin t1 in sortiert)
-                    {
-                        if(UeberschneidenSichTermine(t1, t))
-                        {
-                            t.spalte++;
-                        }
-                        
-                    }
-                    Console.Write(t.TerminID + ": " + t.spalte);
-
-                    Console.WriteLine();
-                }
-            }
-        } 
-
-
-        public int WelcheTerminSpalte(Termin termin)
-        {
-            int spalte = 0;
-
-
-            List<Termin> termineVonTag = SQLiteDataAccess.LoadTermineFromDayOfKalenderwoche(termin.Wochentag, termin.Kalenderwoche);
-
-            foreach(Termin t in termineVonTag)
-            {
-                if(UeberschneidenSichTermine(t, termin) == true)
-                {
-                    spalte++;
-                }
-            }
-            Console.WriteLine(spalte);
-            return spalte;
-        }
-
-
-        public bool UeberschneidenSichTermine(Termin bestehenderTermin, Termin neuerTermin)
-        {
-            string t1VonUhrzeit = bestehenderTermin.vonStunde+":"+ bestehenderTermin.vonMinute;
-            string t1BisUhrzeit = bestehenderTermin.bisStunde + ":" + bestehenderTermin.bisMinute;
-
-
-            string t2VonUhrzeit = neuerTermin.vonStunde + ":" + neuerTermin.vonMinute;
-            string t2BisUhrzeit = neuerTermin.bisStunde + ":" + neuerTermin.bisMinute;
-
-            DateTime von = DateTime.Parse(t1VonUhrzeit);
-            DateTime bis = DateTime.Parse(t1BisUhrzeit);
-
-            DateTime vonNeu = DateTime.Parse(t2VonUhrzeit);
-            DateTime bisNeu = DateTime.Parse(t2BisUhrzeit);
-
-            if (vonNeu.Ticks > von.Ticks && vonNeu.Ticks < bis.Ticks)
-            {
-                return true;
-            }
-            else
-            {
-                if (bisNeu.Ticks > von.Ticks && bisNeu.Ticks < bis.Ticks)
-                {
-                    return true;
-                }
-                else
-                {
-                    if (vonNeu.Ticks > von.Ticks && vonNeu.Ticks < bis.Ticks)
-                    {
-
-                        return true;
-                    }
-                    else
-                    {
-                        if (bisNeu.Ticks > von.Ticks && bisNeu.Ticks < bis.Ticks)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            if (vonNeu.Ticks <= von.Ticks && bisNeu.Ticks >= bis.Ticks)
-                            {
-                               
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
 
         private void vonStunde_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -410,7 +308,23 @@ namespace Assistaplanner
                 isError = true;
                 errorText.Text = "Geben sie eine richtige Minute ein: Bis-Minute";
             }
-            
+
+
+            if (Convert.ToInt32(bisStunde.Text) < Convert.ToInt32(vonStunde.Text))
+            {
+
+                isError = true;
+                errorText.Text = "Bis-Stunde ist kleiner als Von-Stunde!";
+            }
+            else
+            {
+                if(Convert.ToInt32(bisStunde.Text) <= Convert.ToInt32(vonStunde.Text) && Convert.ToInt32(bisMinute.Text) <= Convert.ToInt32(vonMinute.Text)) {
+
+                    isError = true;
+                    errorText.Text = "Bis-Minute ist kleiner oder gleich Von-Minute!";
+                }
+            }
+
 
             termin.TerminUntertitel = UntertitelText.Text;
             termin.Kalenderwoche = kw;
