@@ -24,7 +24,15 @@ namespace Assistaplanner
             using (IDbConnection cnn = Database.DatabaseConnection())
             {
                 var output = cnn.Query<Termin>("select * from termin where wochentag='" + Wochentag + "';", new DynamicParameters());
-                return output.ToList();
+
+                
+                List<Termin> list =  output.ToList();
+                foreach(Termin t in list)
+                {
+                    t.zeit = DateTime.Parse(t.vonStunde + ":" + t.vonMinute);
+                }
+
+                return list;
             }
         }
         public static List<Termin> LoadTermineFromDayOfKalenderwoche(string Wochentag, int kw)
@@ -32,7 +40,14 @@ namespace Assistaplanner
             using (IDbConnection cnn = Database.DatabaseConnection())
             {
                 var output = cnn.Query<Termin>("select * from termin where wochentag='" + Wochentag +  "' and kalenderwoche= '" + kw + "';", new DynamicParameters());
-                return output.ToList();
+
+                List<Termin> list = output.ToList();
+                foreach (Termin t in list)
+                {
+                    t.zeit = DateTime.Parse(t.vonStunde + ":" + t.vonMinute);
+                }
+
+                return list;
             }
         }
         public static List<Termin> LoadTermineOfKalenderwoche(int kw)
@@ -40,7 +55,14 @@ namespace Assistaplanner
             using (IDbConnection cnn = Database.DatabaseConnection())
             {
                 var output = cnn.Query<Termin>("select * from termin where kalenderwoche='" + kw + "';", new DynamicParameters());
-                return output.ToList();
+
+                List<Termin> list = output.ToList();
+                foreach (Termin t in list)
+                {
+                    t.zeit = DateTime.Parse(t.vonStunde + ":" + t.vonMinute);
+                }
+
+                return list;
             }
         }
         public static List<Termin> LoadTermine()
@@ -48,7 +70,14 @@ namespace Assistaplanner
             using(IDbConnection cnn = Database.DatabaseConnection())
             {
                 var output = cnn.Query<Termin>("select * from termin", new DynamicParameters());
-                return output.ToList();
+
+                List<Termin> list = output.ToList();
+                foreach (Termin t in list)
+                {
+                    t.zeit = DateTime.Parse(t.vonStunde + ":" + t.vonMinute);
+                }
+
+                return list;
             }
         }
         public static void SaveKategorie(TerminKategorie kategorie)

@@ -185,10 +185,10 @@ namespace Assistaplanner
                     List<Termin> sortiert = SQLiteDataAccess.LoadTermineFromDayOfKalenderwoche(s, kw);
                     foreach (Termin t in sortiert)
                     {
-                        t.TerminUntertitel = t.vonStunde + ":" + t.vonMinute;
+                        t.zeit = DateTime.Parse(t.vonStunde + ":" + t.vonMinute);
                     }
 
-                    sortiert = sortiert.OrderBy(x => DateTime.Parse(x.TerminUntertitel)).AsList<Termin>();
+                    sortiert = sortiert.OrderBy(x => x.zeit).AsList<Termin>();
 
                     //Spalten zuweisen
                     int maxSpalte = 0;

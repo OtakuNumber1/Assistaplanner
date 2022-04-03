@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assistaplanner"
         mc:Ignorable="d"
-        Title="Tagesansicht" Height="1080" Width="1920" WindowState="Maximized" WindowStyle="SingleBorderWindow">
+        Title="Tagesansicht" WindowState="Maximized" WindowStyle="SingleBorderWindow">
     <Grid Loaded="Grid_Loaded">
 
         <Grid.ColumnDefinitions>
