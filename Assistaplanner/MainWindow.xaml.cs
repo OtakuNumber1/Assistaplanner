@@ -446,10 +446,7 @@ namespace Assistaplanner
         private void PDFButtonT_Click(object sender, RoutedEventArgs e)
         {
             {
-                
-
-                //String filename = "week.png";
-
+                string filename = "week.png";
 
                 int screenLeft = 20;
 
@@ -459,20 +456,13 @@ namespace Assistaplanner
 
                 int screenHeight = 810;
 
-           
-
                 Bitmap bitmap_Screen = new Bitmap(screenWidth, screenHeight);
 
                 Graphics g = Graphics.FromImage(bitmap_Screen);
 
-
-
                 g.CopyFromScreen(screenLeft, screenTop, 0, 0, bitmap_Screen.Size);
 
-              
-           
-
-                Aspose.Pdf.Document pdfDocument = new Aspose.Pdf.Document("assis_woche.pdf");
+                Document pdfDocument = new Document("assis_woche.pdf");
 
                 // Set coordinates
                 int lowerLeftX = 20;
@@ -482,8 +472,7 @@ namespace Assistaplanner
 
                 Aspose.Pdf.Page page = pdfDocument.Pages[1];
                 
-                
-                FileStream imageStream = new FileStream("week.png", FileMode.Open);
+                FileStream imageStream = new FileStream(filename, FileMode.Open);
 
                 page.Resources.Images.Add(imageStream);
 

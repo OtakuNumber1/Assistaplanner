@@ -233,10 +233,10 @@ namespace Assistaplanner
         }
         private void TerminSerieInsertIntoDB()
         {
-            SQLiteConnection conn = Database.DatabaseConnection();
                
                 if (everydayCheck.IsChecked == true)
                 {
+                SQLiteConnection conn = Database.DatabaseConnection();
                 Database.IsConnectionOpen(conn);
 
                 string insertMo = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`kalenderwoche`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @kalenderwoche, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
@@ -338,6 +338,8 @@ namespace Assistaplanner
                 else { 
                 if(moCheck.IsChecked == true)
                 {
+                    SQLiteConnection conn = Database.DatabaseConnection();
+
                     Database.IsConnectionOpen(conn);
 
                     string insertMo = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`kalenderwoche`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @kalenderwoche, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
@@ -356,6 +358,8 @@ namespace Assistaplanner
                 }
                 if (diCheck.IsChecked == true)
                 {
+                    SQLiteConnection conn = Database.DatabaseConnection();
+
                     string insertDi = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`kalenderwoche`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @kalenderwoche, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
                     SQLiteCommand commandDi = new SQLiteCommand(insertDi, conn);
                     commandDi.Parameters.AddWithValue("@terminKategorie", listenTermin.TerminKategorie);
@@ -372,6 +376,8 @@ namespace Assistaplanner
                 }
                 if (miCheck.IsChecked == true)
                 {
+                    SQLiteConnection conn = Database.DatabaseConnection();
+
                     string insertMi = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`kalenderwoche`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @kalenderwoche, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
                     SQLiteCommand commandMi = new SQLiteCommand(insertMi, conn);
                     commandMi.Parameters.AddWithValue("@terminKategorie", listenTermin.TerminKategorie);
@@ -388,6 +394,8 @@ namespace Assistaplanner
                 }
                 if (doCheck.IsChecked == true)
                 {
+                    SQLiteConnection conn = Database.DatabaseConnection();
+
                     string insertDo = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`kalenderwoche`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @kalenderwoche, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
                     SQLiteCommand commandDo = new SQLiteCommand(insertDo, conn);
                     commandDo.Parameters.AddWithValue("@terminKategorie", listenTermin.TerminKategorie);
@@ -404,6 +412,8 @@ namespace Assistaplanner
                 }
                 if (frCheck.IsChecked == true)
                 {
+                    SQLiteConnection conn = Database.DatabaseConnection();
+
                     string insertFr = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`kalenderwoche`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @kalenderwoche, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
                     SQLiteCommand commandFr = new SQLiteCommand(insertFr, conn);
                     commandFr.Parameters.AddWithValue("@terminKategorie", listenTermin.TerminKategorie);
@@ -420,6 +430,8 @@ namespace Assistaplanner
                 }
                 if (saCheck.IsChecked == true)
                 {
+                    SQLiteConnection conn = Database.DatabaseConnection();
+
                     string insertSa = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`kalenderwoche`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @kalenderwoche, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
                     SQLiteCommand commandSa = new SQLiteCommand(insertSa, conn);
                     commandSa.Parameters.AddWithValue("@terminKategorie", listenTermin.TerminKategorie);
@@ -437,6 +449,8 @@ namespace Assistaplanner
                 }
                 if (soCheck.IsChecked == true)
                 {
+                    SQLiteConnection conn = Database.DatabaseConnection();
+
                     string insertSo = "INSERT INTO termin (`terminKategorie`,`terminTitel`,`terminUntertitel`,`kalenderwoche`,`wochentag`,`vonStunde`,`vonMinute`,`bisStunde`,`bisMinute`,`beschreibung`) VALUES (@terminKategorie, @terminTitel, @terminUntertitel, @kalenderwoche, @wochentag, @vonStunde, @vonMinute, @bisStunde, @bisMinute, @beschreibung)";
                     SQLiteCommand commandSo = new SQLiteCommand(insertSo, conn);
                     commandSo.Parameters.AddWithValue("@terminKategorie", listenTermin.TerminKategorie);
