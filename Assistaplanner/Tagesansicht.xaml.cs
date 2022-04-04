@@ -258,14 +258,13 @@ namespace Assistaplanner
                     String filename = "day.png";
 
  
+              int screenLeft = 50;
 
-                    int screenLeft = 20;
+                int screenTop = 180;
 
-                    int screenTop = 110;
+                int screenWidth = 1820;
 
-                    int screenWidth = 1800;
-
-                    int screenHeight = 910;
+                int screenHeight = 850;
 
 
 
