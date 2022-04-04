@@ -446,44 +446,46 @@ namespace Assistaplanner
         private void PDFButtonT_Click(object sender, RoutedEventArgs e)
         {
             {
-                
-
-                //String filename = "week.png";
 
 
-                int screenLeft = 20;
 
-                int screenTop = 210;
+                String filename = "day.png";
 
-                int screenWidth = 1800;
 
-                int screenHeight = 810;
 
-           
+                int screenLeft = 50;
+
+                int screenTop = 180;
+
+                int screenWidth = 1820;
+
+                int screenHeight = 850;
+
+
 
                 Bitmap bitmap_Screen = new Bitmap(screenWidth, screenHeight);
 
                 Graphics g = Graphics.FromImage(bitmap_Screen);
 
 
-
                 g.CopyFromScreen(screenLeft, screenTop, 0, 0, bitmap_Screen.Size);
 
-              
-           
+
+                bitmap_Screen.Save(filename);
+
+
 
                 Aspose.Pdf.Document pdfDocument = new Aspose.Pdf.Document("assis_woche.pdf");
 
                 // Set coordinates
                 int lowerLeftX = 20;
-                int lowerLeftY = 80;
+                int lowerLeftY = 50;
                 int upperRightX = 820;
-                int upperRightY = 450;
+                int upperRightY = 500;
 
                 Aspose.Pdf.Page page = pdfDocument.Pages[1];
-                
-                
-                FileStream imageStream = new FileStream("week.png", FileMode.Open);
+
+                FileStream imageStream = new FileStream("day.png", FileMode.Open);
 
                 page.Resources.Images.Add(imageStream);
 
@@ -495,24 +497,19 @@ namespace Assistaplanner
                 page.Contents.Add(new Aspose.Pdf.Operators.ConcatenateMatrix(matrix));
                 XImage ximage = page.Resources.Images[page.Resources.Images.Count];
 
-            
+
                 page.Contents.Add(new Aspose.Pdf.Operators.Do(ximage.Name));
 
-               
                 page.Contents.Add(new Aspose.Pdf.Operators.GRestore());
 
-                
                 SaveFileDialog save = new SaveFileDialog();
-               
                 save.Title = "PDF speichern";
                 save.Filter = "pdf files (*.pdf)|*.pdf";
-                Nullable<bool> result = save.ShowDialog();
-                if (result == true)
-                {
-                    pdfDocument.Save(save.FileName);
-                }
-                imageStream.Close();
-                
+                save.ShowDialog();
+                pdfDocument.Save(save.FileName);
+
+
+
             }
         }
 
